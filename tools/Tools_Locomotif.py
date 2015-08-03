@@ -13,24 +13,39 @@ DataFilter = "DataFiles (*.txt *.csv)"
 ProjectFilter = "Project Files (*.prj *.py)"
 
 class Tools_Locomotif(object):
+    """
+    Docstring
+    """
     def setupTools(self, Locomotif):
     	self.currentFilename = "tbd"
     	
-    def openDataFile(self, Locomotif):
-        self.openUserFile(self,"Data",DataFilter);
+    def selectDataFile(self, Locomotif):
+        return self.selectUserFile(self,"Data",DataFilter)
 
-    def openGPSFile(self, Locomotif):
-        self.openUserFile(self,"GPS",GPSFilter);
+    def selectGPSFile(self, Locomotif):
+        return self.selectUserFile(self,"GPS",GPSFilter)
 
-    def openProjectFile(self, Locomotif):
-        self.openUserFile(self,"Project",ProjectFilter);
+    def selectProjectFile(self, Locomotif):
+        return self.selectUserFile(self,"Project",ProjectFilter)
 
-    def openUserFile(self, Locomotif, fcaption, selectedFilter):
-        self.ofDialog = QtGui.QFileDialog(None)
-        tmpFileName = self.ofDialog.getOpenFileName(None, "Open "+fcaption+" File", ".", DefaultFilter, selectedFilter );
-        self.msgBox = QtGui.QMessageBox(None)
-        self.msgBox.setText("Selected File was \"" + tmpFileName + "\"")
-        self.msgBox.exec_()
-        return tmpFileName;
+    def selectAnyFile(self, Locomotif):
+        return self.selectUserFile(self,"Datei")
+		
+    def selectUserFile(self, Locomotif, fcaption, selectedFilter="*.*"):
+		""" Function to select a filename from disk """
+		self.ofDialog = QtGui.QFileDialog(None)
+		self.selectedFileName = self.ofDialog.getOpenFileName(None, "Open "+fcaption+" File", ".", DefaultFilter, selectedFilter )
+		'''
+		self.msgBox = QtGui.QMessageBox(None)
+		self.msgBox.setText("Selected Data-File was \"" + self.selectedFileName + "\"")
+		self.msgBox.exec_()
+		print "----Testausgabe Start"
+		print self
+		print self.ofDialog
+		print self.msgBox
+		print self.selectedFileName
+		print "Testausgabe Ende-----"
+		'''
+		return self.selectedFileName
 
 
