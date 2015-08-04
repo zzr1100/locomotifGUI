@@ -8,6 +8,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 from ui.Ui_Locomotif import Ui_Locomotif
 from tools.Tools_Locomotif import Tools_Locomotif
+from work.Work_Locomotif import Work_Locomotif
 from data.Rundata_Locomotif import Rundata_Locomotif
 import locomotif as loc
 
@@ -35,9 +36,15 @@ class Locomotif(QtGui.QMainWindow):
         self.tools.setupTools(self)
         # rundata = Rundata_Locomotif()
         rundata.setupRundata(self)
+        # load work
+        self.work = Work_Locomotif()
+        self.work.setupWork(self,self.ui)
+        
+		# more initialisations
+        self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
+        self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
 
 # These are custom slots used within Qt Designer
-# They call unctions from Tools
 
     def openDataFile(self, Locomotif):
 		""" Load a Data File for Further Processing """
@@ -47,8 +54,7 @@ class Locomotif(QtGui.QMainWindow):
 			self.msgBox.setText("NO FILE SELECTED")
 			self.msgBox.exec_()
 			return 0
-			
-		self.ui.mainDataDisplay.setTabText(1,"Daten1")
+		
 		# store nme in global data	
 		rundata.setDataFileName( self, dataFilename )
 		self.ui.loadedDataFilename.setText(dataFilename);
@@ -80,9 +86,12 @@ class Locomotif(QtGui.QMainWindow):
 		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=map1Filename )		
 		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12, out_path=map2Filename )	
 		# Show Maps
-		scene = QtGui.QGraphicsScene();
-		scene.addPixmap( QtGui.QPixmap(map1Filename) )
-		self.ui.t1MapView.setScene(scene);
+		scene1 = QtGui.QGraphicsScene();
+		scene1.addPixmap( QtGui.QPixmap(map1Filename) )
+		self.ui.t14MapView.setScene(scene1);
+		scene2 = QtGui.QGraphicsScene();
+		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
+		self.ui.t15MapView.setScene(scene2);
 		rundata.debugRundata()
 		return 1
 
@@ -94,31 +103,29 @@ class Locomotif(QtGui.QMainWindow):
 		""" Load a Project File for Further Processing """
 		projectFileName = self.tools.selectProjectFile(self)
 
+    def doReadCSV(self, Locomotif):
+		"""
+		Reload the CSV DataFrames with the given name
+		"""
+		self.work.workReadCSV( self, rundata )
+
+    def doCreateCluster(self, Locomotif):
+		"""
+		Create Cluster for the loaded Dataframe
+		"""
+		self.work.workCreateCluster( self, rundata )
+
+    def doCreatePolygone(self, Locomotif):
+		"""
+		Create Polygone from given cluster
+		"""
+		self.work.workCreatePolygone(self, rundata )
+
     def doCreateMaps(self, Locomotif):
 		"""
-		ReCreate the Maps for the loaded Datasets
-		Us sizes from input fields
+		Slot for button CreateMap
 		"""
-		# new size form input fields
-		mapWidth = self.ui.cmdMapWidth.text().toInt(10)
-		mapHeight = self.ui.cmdMapHeight.text().toInt(10)
-		rundata.setMapWidth( self, mapWidth )
-		rundata.setMapHeight( self, mapHeight )
-		# stored filename
-		map1Filename = rundata.getV1Mapname( self )
-		map2Filename = rundata.getV2Mapname( self )
-		# stored polygons
-		res11 = rundata.getVoronoi1( self );
-		res12 = rundata.getVoronoi1( self );
-		rundata.debugRundata()
-		# create new maps for current cluster
-		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=map1Filename )		
-		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12, out_path=map2Filename )	
-		# Show Maps
-		scene = QtGui.QGraphicsScene();
-		scene.addPixmap( QtGui.QPixmap(map1Filename) )
-		self.ui.t1MapView.setScene(scene);
-		rundata.debugRundata()
+		self.work.workCreateMaps( self, rundata )
 
 
 if __name__ == "__main__":

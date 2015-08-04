@@ -46,9 +46,15 @@ class Rundata_Locomotif(object):
 		
 	def setDF( self, loc, df ):
 		self.df = df		
-		
+
+	def getDF( self, loc ):
+		return self.df		
+
 	def setCluster( self, loc, cluster ):
 		self.cluster = cluster	
+
+	def getCluster( self, loc ):
+		return self.cluster
 
 	def setVoronoi1( self, loc, res, ref ):
 		self.voronoi1values = res

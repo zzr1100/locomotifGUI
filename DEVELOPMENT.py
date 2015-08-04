@@ -22,6 +22,7 @@ uic.compileUiDir("ui/")
 # order to draw the correct window.
 uic.compileUiDir("tools/")
 uic.compileUiDir("data/")
+uic.compileUiDir("work/")
 
 #-----------------------------------------------------------------------------
 # locomotif API 

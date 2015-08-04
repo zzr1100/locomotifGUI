@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1110</width>
-    <height>727</height>
+    <width>1109</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <x>0</x>
       <y>0</y>
       <width>971</width>
-      <height>681</height>
+      <height>691</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -115,18 +115,69 @@
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
      </widget>
-     <widget class="QGraphicsView" name="t1MapView">
+     <widget class="QTabWidget" name="t1Data">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>120</y>
-        <width>871</width>
-        <height>521</height>
+        <x>20</x>
+        <y>90</y>
+        <width>951</width>
+        <height>571</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      <property name="currentIndex">
+       <number>4</number>
       </property>
+      <widget class="QWidget" name="t11Data">
+       <attribute name="title">
+        <string>Daten</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="t12Polygon">
+       <attribute name="title">
+        <string>Polygon1</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="t13Polygon">
+       <attribute name="title">
+        <string>Polygon2</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="t14Map">
+       <attribute name="title">
+        <string>Map1</string>
+       </attribute>
+       <widget class="QGraphicsView" name="t14MapView">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>951</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="t15Map">
+       <attribute name="title">
+        <string>Map2</string>
+       </attribute>
+       <widget class="QGraphicsView" name="t15MapView">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>951</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -141,7 +192,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1110</width>
+     <width>1109</width>
      <height>21</height>
     </rect>
    </property>
@@ -466,7 +517,7 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
     <hint type="destinationlabel">
      <x>59</x>
-     <y>196</y>
+     <y>177</y>
     </hint>
    </hints>
   </connection>
@@ -574,11 +625,59 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>464</y>
+     <y>445</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
      <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdReadCSV</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doReadCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>503</x>
+     <y>-16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdCreateCluster</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doCreateCluster()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>484</x>
+     <y>-11</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdCreateVPolygone</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doCreatePolygone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>-2</y>
     </hint>
    </hints>
   </connection>
