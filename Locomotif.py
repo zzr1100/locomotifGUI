@@ -40,9 +40,17 @@ class Locomotif(QtGui.QMainWindow):
         self.work = Work_Locomotif()
         self.work.setupWork(self,self.ui)
         
+        # create font for data display
+        dataFont = QtGui.QFont()
+        dataFont.setStyleHint(QtGui.QFont.Courier)
+        rundata.setDataFont( self, dataFont )
+		
 		# more initialisations
         self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
         self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
+        self.ui.t11DataFrame.setCurrentFont(dataFont)
+        self.ui.t12PolygonData.setCurrentFont(dataFont)
+        self.ui.t13PolygonData.setCurrentFont(dataFont)
 
 # These are custom slots used within Qt Designer
 
@@ -59,18 +67,15 @@ class Locomotif(QtGui.QMainWindow):
 		rundata.setDataFileName( self, dataFilename )
 		self.ui.loadedDataFilename.setText(dataFilename);
 		self.ui.t1LoadedDataFilename.setText(dataFilename);
-		# create data frame
-		df = loc.read_csv( str(dataFilename), mapsta_version=100)
-		rundata.setDF(self, df )
-		# and locomotif cluster object
-		c = loc.Cluster(df)
-		rundata.setCluster( self, c )
-		self.ui.t1LoadedDatasets.setText(str(c.getDatasets()));
-		# Daten fuer Polygone berechnen
-		res11, ref = c.voronoi('biomass')
-		rundata.setVoronoi1( self, res11, ref )
-		res12, ref = c.voronoi('diversity')
-		rundata.setVoronoi2( self, res12, ref )
+		# initial names for maps
+		mapv1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_v.png"
+		mapv2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_v.png"
+		rundata.setV1Mapname( self, mapv1Filename )
+		rundata.setV2Mapname( self, mapv2Filename )
+		mapd1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_d.png"
+		mapd2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_d.png"
+		rundata.setD1Mapname( self, mapd1Filename )
+		rundata.setD2Mapname( self, mapd2Filename )
 		# initial values for maps
 		mapWidth = 700
 		rundata.setMapWidth( self, mapWidth )
@@ -78,19 +83,34 @@ class Locomotif(QtGui.QMainWindow):
 		mapHeight = 500
 		rundata.setMapHeight( self, mapHeight )
 		self.ui.cmdMapHeight.setText(str(mapHeight))
-		map1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_v.png"
-		map2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_v.png"
-		rundata.setV1Mapname( self, map1Filename )
-		rundata.setV2Mapname( self, map2Filename )
+		
+		return 1
+		
+		# create data frame
+		df = loc.read_csv( str(dataFilename), mapsta_version=100)
+		rundata.setDF(self, df )
+		self.ui.t11DataFrame.setCurrentFont(rundata.getDataFont(self))
+		self.ui.t11DataFrame.setText( str(df) )
+		# and locomotif cluster object
+		c = loc.Cluster(df)
+		rundata.setCluster( self, c )
+		self.ui.t1LoadedDatasets.setText(str(c.getDatasets()))
+		# Daten fuer Polygone berechnen
+		res11, ref = c.voronoi('biomass')
+		rundata.setVoronoi1( self, res11, ref )
+		self.ui.t12PolygonData.setText( str(res11) )
+		res12, ref = c.voronoi('diversity')
+		rundata.setVoronoi2( self, res12, ref )
+		self.ui.t13PolygonData.setText( str(res12) )
 		# create new maps for current cluster
-		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=map1Filename )		
-		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12, out_path=map2Filename )	
+		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=mapv1Filename )		
+		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12, out_path=mapv2Filename )	
 		# Show Maps
 		scene1 = QtGui.QGraphicsScene();
-		scene1.addPixmap( QtGui.QPixmap(map1Filename) )
+		scene1.addPixmap( QtGui.QPixmap(mapv1Filename) )
 		self.ui.t14MapView.setScene(scene1);
 		scene2 = QtGui.QGraphicsScene();
-		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
+		scene2.addPixmap( QtGui.QPixmap(mapv2Filename) )
 		self.ui.t15MapView.setScene(scene2);
 		rundata.debugRundata()
 		return 1
@@ -108,18 +128,37 @@ class Locomotif(QtGui.QMainWindow):
 		Reload the CSV DataFrames with the given name
 		"""
 		self.work.workReadCSV( self, rundata )
+		df = rundata.getDF( self )
+		self.ui.t11DataFrame.setText( str(df) )
+		self.ui.t12PolygonData.setText( str(res11) )
 
     def doCreateCluster(self, Locomotif):
 		"""
 		Create Cluster for the loaded Dataframe
 		"""
 		self.work.workCreateCluster( self, rundata )
+		c = rundata.getCluster( self )
+		self.ui.t1LoadedDatasets.setText(str(c.getDatasets()))
 
-    def doCreatePolygone(self, Locomotif):
+    def doCreateVPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
-		self.work.workCreatePolygone(self, rundata )
+		self.work.workCreateVPolygone(self, rundata )
+		res11 = rundata.getVoronoi1( self );
+		res12 = rundata.getVoronoi2( self );
+		self.ui.t12PolygonData.setText( str(res11) )
+		self.ui.t13PolygonData.setText( str(res12) )
+
+    def doCreateDPolygone(self, Locomotif):
+		"""
+		Create Polygone from given cluster
+		"""
+		self.work.workCreateDPolygone(self, rundata )
+		res11 = rundata.getDelaunay1( self );
+		res12 = rundata.getDelaunay2( self );
+		self.ui.t12PolygonData.setText( str(res11) )
+		self.ui.t13PolygonData.setText( str(res12) )
 
     def doCreateMaps(self, Locomotif):
 		"""

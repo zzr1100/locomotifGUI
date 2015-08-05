@@ -26,7 +26,7 @@
       <x>0</x>
       <y>0</y>
       <width>971</width>
-      <height>691</height>
+      <height>701</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -125,22 +125,64 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="t11Data">
        <attribute name="title">
         <string>Daten</string>
        </attribute>
+       <widget class="QTextEdit" name="t11DataFrame">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+font: 8pt &quot;Courier New&quot;;</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="t12Polygon">
        <attribute name="title">
-        <string>Polygon1</string>
+        <string>V-Polygon1</string>
        </attribute>
+       <widget class="QTextEdit" name="t12PolygonData">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+font: 8pt &quot;Courier New&quot;;</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="t13Polygon">
        <attribute name="title">
-        <string>Polygon2</string>
+        <string>V-Polygon2</string>
        </attribute>
+       <widget class="QTextEdit" name="t13PolygonData">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+font: 8pt &quot;Courier New&quot;;</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="t14Map">
        <attribute name="title">
@@ -273,7 +315,7 @@ background-color: rgb(255, 255, 255);</string>
         <string notr="true">background-color: rgb(220, 220, 220);</string>
        </property>
        <property name="text">
-        <string>open Data File</string>
+        <string>Select Data File</string>
        </property>
       </widget>
      </item>
@@ -283,7 +325,7 @@ background-color: rgb(255, 255, 255);</string>
         <string notr="true">background-color: rgb(220, 220, 220);</string>
        </property>
        <property name="text">
-        <string>open GPS File</string>
+        <string>Select GPS File</string>
        </property>
       </widget>
      </item>
@@ -293,7 +335,7 @@ background-color: rgb(255, 255, 255);</string>
         <string notr="true">background-color: rgb(220, 220, 220);</string>
        </property>
        <property name="text">
-        <string>open Project</string>
+        <string>Select Project</string>
        </property>
       </widget>
      </item>
@@ -398,7 +440,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>230</y>
+       <y>250</y>
        <width>101</width>
        <height>23</height>
       </rect>
@@ -414,7 +456,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>180</y>
+       <y>200</y>
        <width>46</width>
        <height>13</height>
       </rect>
@@ -432,7 +474,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>200</y>
+       <y>220</y>
        <width>41</width>
        <height>20</height>
       </rect>
@@ -442,10 +484,26 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>60</x>
-       <y>200</y>
+       <y>220</y>
        <width>41</width>
        <height>20</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cmdCreateDPolygone">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>101</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(220, 220, 220);</string>
+     </property>
+     <property name="text">
+      <string>D-Polygone ber.</string>
      </property>
     </widget>
    </widget>
@@ -625,7 +683,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>445</y>
+     <y>466</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
@@ -645,7 +703,7 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
     <hint type="destinationlabel">
      <x>503</x>
-     <y>-16</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -661,7 +719,7 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
     <hint type="destinationlabel">
      <x>484</x>
-     <y>-11</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -669,7 +727,7 @@ background-color: rgb(255, 255, 255);</string>
    <sender>cmdCreateVPolygone</sender>
    <signal>clicked(bool)</signal>
    <receiver>Locomotif</receiver>
-   <slot>doCreatePolygone()</slot>
+   <slot>doCreateVPolygone()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>83</x>
@@ -677,7 +735,23 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
-     <y>-2</y>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdCreateDPolygone</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doCreateDPolygone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>366</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>383</y>
     </hint>
    </hints>
   </connection>
@@ -689,7 +763,8 @@ background-color: rgb(255, 255, 255);</string>
   <slot>openDataFile()</slot>
   <slot>doReadCSV()</slot>
   <slot>doCreateCluster()</slot>
-  <slot>doCreatePolygone()</slot>
+  <slot>doCreateVPolygone()</slot>
   <slot>doCreateMaps()</slot>
+  <slot>doCreateDPolygone()</slot>
  </slots>
 </ui>
