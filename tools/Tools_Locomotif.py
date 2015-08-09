@@ -48,4 +48,17 @@ class Tools_Locomotif(object):
 		'''
 		return self.selectedFileName
 
+    def readDataFile(self, Locomotif, filePathAndName ):
+		""" Function to read textfile from disk """
+		result = QtCore.QString()
+		fhdl = QtCore.QFile(filePathAndName)
+		fhdl.open(QtCore.QIODevice.ReadWrite)
+		istream = QtCore.QTextStream(fhdl)
+		while (not istream.atEnd()):
+			line = istream.readLine()
+			result.append( line )
+			result.append( "\n" )
+		fhdl.close()
+		return result
+
 

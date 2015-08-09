@@ -48,9 +48,6 @@ class Locomotif(QtGui.QMainWindow):
 		# more initialisations
         self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
         self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
-        self.ui.t11DataFrame.setCurrentFont(dataFont)
-        self.ui.t12PolygonData.setCurrentFont(dataFont)
-        self.ui.t13PolygonData.setCurrentFont(dataFont)
 
 # These are custom slots used within Qt Designer
 
@@ -67,6 +64,10 @@ class Locomotif(QtGui.QMainWindow):
 		rundata.setDataFileName( self, dataFilename )
 		self.ui.loadedDataFilename.setText(dataFilename);
 		self.ui.t1LoadedDataFilename.setText(dataFilename);
+		# load and display initial data
+		self.work.readDataFileIntoTable( self, dataFilename )
+		self.work.markDataOnGoogleMap( self, dataFilename )
+		
 		# initial names for maps
 		mapv1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_v.png"
 		mapv2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_v.png"
@@ -89,8 +90,8 @@ class Locomotif(QtGui.QMainWindow):
 		# create data frame
 		df = loc.read_csv( str(dataFilename), mapsta_version=100)
 		rundata.setDF(self, df )
-		self.ui.t11DataFrame.setCurrentFont(rundata.getDataFont(self))
-		self.ui.t11DataFrame.setText( str(df) )
+		self.ui.t1DataFrameView.setCurrentFont(rundata.getDataFont(self))
+		self.ui.t1DataFrameView.setText( str(df) )
 		# and locomotif cluster object
 		c = loc.Cluster(df)
 		rundata.setCluster( self, c )
@@ -98,20 +99,20 @@ class Locomotif(QtGui.QMainWindow):
 		# Daten fuer Polygone berechnen
 		res11, ref = c.voronoi('biomass')
 		rundata.setVoronoi1( self, res11, ref )
-		self.ui.t12PolygonData.setText( str(res11) )
+		self.ui.t1Polygon1View.setText( str(res11) )
 		res12, ref = c.voronoi('diversity')
 		rundata.setVoronoi2( self, res12, ref )
-		self.ui.t13PolygonData.setText( str(res12) )
+		self.ui.t1Polygon2View.setText( str(res12) )
 		# create new maps for current cluster
 		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=mapv1Filename )		
 		loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12, out_path=mapv2Filename )	
 		# Show Maps
 		scene1 = QtGui.QGraphicsScene();
 		scene1.addPixmap( QtGui.QPixmap(mapv1Filename) )
-		self.ui.t14MapView.setScene(scene1);
+		self.ui.t1Map1View.setScene(scene1);
 		scene2 = QtGui.QGraphicsScene();
 		scene2.addPixmap( QtGui.QPixmap(mapv2Filename) )
-		self.ui.t15MapView.setScene(scene2);
+		self.ui.t1Map2View.setScene(scene2);
 		rundata.debugRundata()
 		return 1
 
@@ -129,8 +130,7 @@ class Locomotif(QtGui.QMainWindow):
 		"""
 		self.work.workReadCSV( self, rundata )
 		df = rundata.getDF( self )
-		self.ui.t11DataFrame.setText( str(df) )
-		self.ui.t12PolygonData.setText( str(res11) )
+		self.work.putCSVIntoTable( self, df )
 
     def doCreateCluster(self, Locomotif):
 		"""
@@ -147,8 +147,8 @@ class Locomotif(QtGui.QMainWindow):
 		self.work.workCreateVPolygone(self, rundata )
 		res11 = rundata.getVoronoi1( self );
 		res12 = rundata.getVoronoi2( self );
-		self.ui.t12PolygonData.setText( str(res11) )
-		self.ui.t13PolygonData.setText( str(res12) )
+		self.ui.t1Polygon1View.setText( str(res11) )
+		self.ui.t1Polygon2View.setText( str(res12) )
 
     def doCreateDPolygone(self, Locomotif):
 		"""
@@ -157,8 +157,8 @@ class Locomotif(QtGui.QMainWindow):
 		self.work.workCreateDPolygone(self, rundata )
 		res11 = rundata.getDelaunay1( self );
 		res12 = rundata.getDelaunay2( self );
-		self.ui.t12PolygonData.setText( str(res11) )
-		self.ui.t13PolygonData.setText( str(res12) )
+		self.ui.t1Polygon1View.setText( str(res11) )
+		self.ui.t1Polygon2View.setText( str(res12) )
 
     def doCreateMaps(self, Locomotif):
 		"""

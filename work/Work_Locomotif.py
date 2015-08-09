@@ -5,7 +5,7 @@ Created on Tue Jul 07 06:55:51 2015
 @author: Thomas
 """
 import sys
-from PyQt4 import QtCore, QtGui;
+from PyQt4 import QtCore, QtGui, QtWebKit;
 import locomotif as loc
 
 class Work_Locomotif(object):
@@ -118,9 +118,156 @@ class Work_Locomotif(object):
 		# Show Maps
 		scene1 = QtGui.QGraphicsScene();
 		scene1.addPixmap( QtGui.QPixmap(map1Filename) )
-		self.ui.t14MapView.setScene(scene1);
+		self.ui.t1Map1View.setScene(scene1);
 		scene2 = QtGui.QGraphicsScene();
 		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
-		self.ui.t15MapView.setScene(scene2);
+		self.ui.t1Map2View.setScene(scene2);
 		rundata.debugRundata()
+		
+    def readDataFileIntoTable(self, Locomotif, filePathAndName ):
+		""" 
+		Function to display textfile in table 
+		"""
+		fhdl = QtCore.QFile(filePathAndName)
+		fhdl.open(QtCore.QIODevice.ReadWrite)
+		istream = QtCore.QTextStream(fhdl)
+		# clear table 
+		self.ui.t1FileDataView.clear()
+		initRowCount = self.ui.t1FileDataView.rowCount()
+		# read headert line with table names
+		line = istream.readLine()
+		fields = line.split(';')
+		numofcols = fields.count()
+		self.ui.t1FileDataView.setHorizontalHeaderLabels( fields )
+		self.ui.t1FileDataView.setColumnWidth(0,140)
+		self.ui.t1FileDataView.setColumnWidth(1,140)
+		# read data lines
+		rowIndex = 0
+		while (not istream.atEnd()):
+			line = istream.readLine()
+			values = line.split(';')
+			numofcols = values.count()
+			if rowIndex>=initRowCount:
+				self.ui.t1FileDataView.insertRow(rowIndex)
+			self.ui.t1FileDataView.setRowHeight(rowIndex,22)
+			colIndex = 0
+			for value in values:
+				item = QtGui.QTableWidgetItem()
+				item.setText( str(value) )
+				self.ui.t1FileDataView.setItem( rowIndex, colIndex, item )
+				# print "Zelle " + str(colIndex) + " / "+ str(rowIndex)+" = " + value
+				colIndex = colIndex+1
+			rowIndex = rowIndex+ 1
+		fhdl.close()
+
+    def markDataOnGoogleMap(self, Locomotif, filePathAndName):
+		""" display google map with data points marked """
+		# prepare GOOGLE MAPS url
+		map = self.ui.t1GoogleMapsView
+		url = "http://maps.google.com/maps/api/staticmap?maptype=hybrid&sensor=false&language=de"
+		url = url + "&size=750x550"
+		# read file and append markers
+		fhdl = QtCore.QFile(filePathAndName)
+		fhdl.open(QtCore.QIODevice.ReadWrite)
+		istream = QtCore.QTextStream(fhdl)
+		# skip header line
+		line = istream.readLine()
+		# take value form first line as center
+		minlat = float(90)
+		maxlat = float(-90)
+		minlon = float(360)
+		maxlon = float(0)
+		while (not istream.atEnd()):
+			line = istream.readLine()
+			values = line.split(';')
+			url = url + "&markers="+str(values[0])+","+str(values[1])
+			lat = float(values[0])
+			lon = float(values[1])
+			if lat<minlat:
+				minlat = lat
+			if lat>maxlat:
+				maxlat = lat
+			if lon<minlon:
+				minlon = lon
+			if lon>maxlon:
+				maxlon = lon
+		# select center and zoom
+		difflat = maxlat-minlat
+		difflon = maxlon-minlon
+		midlat = maxlat - difflat/2
+		midlon = maxlon - difflon/2
+		url = url + "&center="+str(midlat)+","+str(midlon)
+		# zoomfaktor berechnen
+		diff = difflat
+		if difflon>difflat:
+			diff = difflon
+		zoom = 10
+		if diff<=0.001:
+			zoom = 17
+		if diff>0.001 and diff<=0.1:
+			zoom = 16
+		if diff>0.01 and diff<=0.025:
+			zoom = 15
+		if diff>0.025 and diff<=0.05:
+			zoom = 14
+		if diff>0.05 and diff<=0.1:
+			zoom = 13
+		if diff>0.1 and diff<=0.2:
+			zoom = 12
+		if diff>0.2 and diff<=1:
+			zoom = 11
+		if diff>1 and diff<=2:
+			zoom = 10
+		if diff>2 and diff<=4:
+			zoom = 9
+		if diff>4 and diff<=8:
+			zoom = 8
+		if diff>8 and diff<=16:
+			zoom = 7
+		if diff>16:
+			zoom = 6
+		print difflat
+		print difflon
+		print zoom
+		url = url + "&zoom="+str(zoom)
+		# display
+		map.load( QtCore.QUrl(url))
+
+    def putCSVIntoTable(self, Locomotif, df ):
+		""" Function display CSV in table """
+		# clear table 
+		self.ui.t1DataFrameView.clear()
+		initRowCount = self.ui.t1DataFrameView.rowCount()
+		# set table header
+		colIndex = 0
+		for col in df.columns:
+			item = QtGui.QTableWidgetItem()
+			item.setText( str(col) )
+			self.ui.t1DataFrameView.setHorizontalHeaderItem( colIndex, item )
+			colIndex = colIndex+1
+		self.ui.t1DataFrameView.setColumnWidth(2,260)
+		# display data lines
+		rowIndex = 0
+		for value in df.values:
+			if rowIndex>=initRowCount:
+				self.ui.t1DataFrameView.insertRow(rowIndex)
+			self.ui.t1DataFrameView.setRowHeight(rowIndex,22)
+			colIndex = 0
+			# df object has always 3 columns
+			item = QtGui.QTableWidgetItem()
+			item.setText( str(value[0]) )
+			self.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			colIndex = colIndex+1
+			item = QtGui.QTableWidgetItem()
+			item.setText( str(value[1]) )
+			self.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			colIndex = colIndex+1
+			item = QtGui.QTableWidgetItem()
+			item.setText( str(value[2]) )
+			self.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			rowIndex = rowIndex+ 1
+			
+		
+		
+
 		

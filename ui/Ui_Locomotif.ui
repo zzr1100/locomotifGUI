@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1109</width>
-    <height>767</height>
+    <width>1068</width>
+    <height>751</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,13 +125,13 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
-      <widget class="QWidget" name="t11Data">
+      <widget class="QWidget" name="t1FileData">
        <attribute name="title">
-        <string>Daten</string>
+        <string>Datei</string>
        </attribute>
-       <widget class="QTextEdit" name="t11DataFrame">
+       <widget class="QTableWidget" name="t1FileDataView">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -141,16 +141,89 @@
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-font: 8pt &quot;Courier New&quot;;</string>
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>6</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
+        <column/>
        </widget>
       </widget>
-      <widget class="QWidget" name="t12Polygon">
+      <widget class="QWidget" name="t1DataFrame">
+       <attribute name="title">
+        <string>Geladene Daten</string>
+       </attribute>
+       <widget class="QTableWidget" name="t1DataFrameView">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>3</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
+        <column/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="t1Polygon1">
        <attribute name="title">
         <string>V-Polygon1</string>
        </attribute>
-       <widget class="QTextEdit" name="t12PolygonData">
+       <widget class="QTextEdit" name="t1Polygon1View">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -165,11 +238,11 @@ font: 8pt &quot;Courier New&quot;;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="t13Polygon">
+      <widget class="QWidget" name="t1Polygon2">
        <attribute name="title">
         <string>V-Polygon2</string>
        </attribute>
-       <widget class="QTextEdit" name="t13PolygonData">
+       <widget class="QTextEdit" name="t1Polygon2View">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -184,11 +257,11 @@ font: 8pt &quot;Courier New&quot;;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="t14Map">
+      <widget class="QWidget" name="t1Map1">
        <attribute name="title">
         <string>Map1</string>
        </attribute>
-       <widget class="QGraphicsView" name="t14MapView">
+       <widget class="QGraphicsView" name="t1Map1View">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -202,11 +275,11 @@ font: 8pt &quot;Courier New&quot;;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="t15Map">
+      <widget class="QWidget" name="t1Map2">
        <attribute name="title">
         <string>Map2</string>
        </attribute>
-       <widget class="QGraphicsView" name="t15MapView">
+       <widget class="QGraphicsView" name="t1Map2View">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -217,6 +290,29 @@ font: 8pt &quot;Courier New&quot;;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="t1GoogleMaps">
+       <attribute name="title">
+        <string>Google Map</string>
+       </attribute>
+       <widget class="QWebView" name="t1GoogleMapsView">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>921</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="url">
+         <url>
+          <string>about:blank</string>
+         </url>
         </property>
        </widget>
       </widget>
@@ -234,7 +330,7 @@ font: 8pt &quot;Courier New&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1109</width>
+     <width>1068</width>
      <height>21</height>
     </rect>
    </property>
@@ -545,6 +641,13 @@ background-color: rgb(255, 255, 255);</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
