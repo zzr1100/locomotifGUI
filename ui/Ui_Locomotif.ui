@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1068</width>
+    <width>1101</width>
     <height>751</height>
    </rect>
   </property>
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="tabsClosable">
      <bool>true</bool>
@@ -61,7 +61,7 @@
     </property>
     <widget class="QWidget" name="tab_1">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Datensatz 1</string>
      </attribute>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
@@ -125,7 +125,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="t1FileData">
        <attribute name="title">
@@ -320,8 +320,201 @@ font: 8pt &quot;Courier New&quot;;</string>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Datensatz 2</string>
      </attribute>
+     <widget class="QDockWidget" name="Konfiguration">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>661</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(229, 229, 229);
+border-left-color: rgb(0, 0, 0);
+border-bottom-color: rgb(0, 0, 0);
+border-right-color: rgb(0, 0, 0);
+border-top-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="floating">
+       <bool>false</bool>
+      </property>
+      <property name="allowedAreas">
+       <set>Qt::BottomDockWidgetArea|Qt::TopDockWidgetArea</set>
+      </property>
+      <property name="windowTitle">
+       <string>Einstellungen</string>
+      </property>
+      <widget class="QWidget" name="dockWidgetContents_5">
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>30</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Pfad zu Datendateien:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>111</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Pfad zu Map-Dateien:</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>100</y>
+          <width>151</width>
+          <height>81</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Kartengröße</string>
+        </property>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Breite:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_8">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>41</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Höhe:</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="editCfgMapWidth">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>20</y>
+           <width>51</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="editCfgMapHeight">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>50</y>
+           <width>51</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QLineEdit" name="editCfgDataPath">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>30</y>
+          <width>411</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="editCfgMapPath">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>60</y>
+          <width>411</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="cmdCfgStore">
+        <property name="geometry">
+         <rect>
+          <x>480</x>
+          <y>150</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Speichern</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="cmdSelCfgDataPath">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>30</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Auswahl</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="cmdSelCfgMapPath">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>60</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Auswahl</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -330,36 +523,40 @@ font: 8pt &quot;Courier New&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1068</width>
+     <width>1101</width>
      <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Datei</string>
     </property>
-    <addaction name="actionOpen_GPS_File"/>
-    <addaction name="actionOpen_Project"/>
+    <addaction name="actionLoadDataFile"/>
+    <addaction name="actionLoadGPSFile"/>
+    <addaction name="actionLoadProject"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>View</string>
+     <string>Bearbeiten</string>
     </property>
-    <widget class="QMenu" name="menuWindow">
-     <property name="title">
-      <string>Window</string>
-     </property>
-     <addaction name="actionQuick_Command_Box"/>
-     <addaction name="actionStatus_Box"/>
-    </widget>
-    <addaction name="menuWindow"/>
+    <addaction name="actionCommands"/>
+    <addaction name="actionEdit"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>?</string>
+    </property>
+    <addaction name="actionHilfe"/>
     <addaction name="separator"/>
-    <addaction name="actionHelp"/>
+    <addaction name="actionEinstellungen"/>
+    <addaction name="separator"/>
+    <addaction name="actionInfo"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="QuickCommand">
@@ -455,7 +652,7 @@ background-color: rgb(255, 255, 255);</string>
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Bearbeiten</string>
+    <string>Auswertung</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -609,35 +806,44 @@ background-color: rgb(255, 255, 255);</string>
     <string>Quit</string>
    </property>
   </action>
-  <action name="actionQuick_Command_Box">
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Quick Command Box</string>
-   </property>
-  </action>
-  <action name="actionHelp">
-   <property name="text">
-    <string>Help</string>
-   </property>
-  </action>
-  <action name="actionOpen_GPS_File">
+  <action name="actionLoadGPSFile">
    <property name="text">
     <string>Open GPS File...</string>
    </property>
   </action>
-  <action name="actionOpen_Project">
+  <action name="actionLoadProject">
    <property name="text">
     <string>Open Project...</string>
    </property>
   </action>
-  <action name="actionStatus_Box">
-   <property name="checked">
-    <bool>false</bool>
-   </property>
+  <action name="actionHilfe">
    <property name="text">
-    <string>Status Box</string>
+    <string>Hilfe</string>
+   </property>
+  </action>
+  <action name="actionEinstellungen">
+   <property name="text">
+    <string>Einstellungen</string>
+   </property>
+  </action>
+  <action name="actionInfo">
+   <property name="text">
+    <string>Info...</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Aktueller Datensatz</string>
+   </property>
+  </action>
+  <action name="actionCommands">
+   <property name="text">
+    <string>Quick Command Box</string>
+   </property>
+  </action>
+  <action name="actionLoadDataFile">
+   <property name="text">
+    <string>Datensatz auswählen...</string>
    </property>
   </action>
  </widget>
@@ -667,7 +873,7 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>actionQuick_Command_Box</sender>
+   <sender>actionCommands</sender>
    <signal>triggered(bool)</signal>
    <receiver>QuickCommand</receiver>
    <slot>show()</slot>
@@ -683,7 +889,7 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>actionStatus_Box</sender>
+   <sender>actionEdit</sender>
    <signal>triggered(bool)</signal>
    <receiver>QuickStatus</receiver>
    <slot>show()</slot>
@@ -699,7 +905,7 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>actionOpen_Project</sender>
+   <sender>actionLoadProject</sender>
    <signal>triggered(bool)</signal>
    <receiver>Locomotif</receiver>
    <slot>openProjectFile()</slot>
@@ -747,7 +953,7 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>actionOpen_GPS_File</sender>
+   <sender>actionLoadGPSFile</sender>
    <signal>triggered(bool)</signal>
    <receiver>Locomotif</receiver>
    <slot>openGPSFile()</slot>
@@ -786,7 +992,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>466</y>
+     <y>495</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
@@ -802,7 +1008,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>82</x>
-     <y>276</y>
+     <y>305</y>
     </hint>
     <hint type="destinationlabel">
      <x>503</x>
@@ -818,7 +1024,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>34</x>
-     <y>307</y>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
      <x>484</x>
@@ -834,7 +1040,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>83</x>
-     <y>333</y>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -850,11 +1056,91 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>366</y>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
      <y>383</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoadDataFile</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>openDataFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionEinstellungen</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>Konfiguration</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>679</x>
+     <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdCfgStore</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doStoreCfgData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>644</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>718</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdSelCfgDataPath</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectDataPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>711</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>672</x>
+     <y>-16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdSelCfgMapPath</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectMapPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>737</x>
+     <y>231</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>794</x>
+     <y>-15</y>
     </hint>
    </hints>
   </connection>
@@ -869,5 +1155,8 @@ background-color: rgb(255, 255, 255);</string>
   <slot>doCreateVPolygone()</slot>
   <slot>doCreateMaps()</slot>
   <slot>doCreateDPolygone()</slot>
+  <slot>doStoreCfgData()</slot>
+  <slot>doSelectDataPath()</slot>
+  <slot>doSelectMapPath()</slot>
  </slots>
 </ui>

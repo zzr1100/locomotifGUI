@@ -5,7 +5,7 @@ Created on Tue Jul 07 06:55:51 2015
 @author: Thomas
 """
 import sys
-from PyQt4 import QtCore, QtGui;
+#from PyQt4 import QtCore, QtGui;
 
 class Rundata_Locomotif(object):
 	"""

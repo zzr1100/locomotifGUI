@@ -5,53 +5,83 @@ Created on Tue Jul 07 06:55:51 2015
 @author: Mirko
 """
 import sys
+import os
 from PyQt4 import QtGui, QtCore
 from ui.Ui_Locomotif import Ui_Locomotif
 from tools.Tools_Locomotif import Tools_Locomotif
 from work.Work_Locomotif import Work_Locomotif
 from data.Rundata_Locomotif import Rundata_Locomotif
+from config.Config_Locomotif import Config_Locomotif
 import locomotif as loc
 
 # globaler Datenspeicher
 rundata = Rundata_Locomotif()
+config = Config_Locomotif()
 
 class Locomotif(QtGui.QMainWindow):
-    """
-    Docstring
-    """
-    def __init__(self, parent=None):
-        """
-        Docstring
-        """
-        # load all basic PyQt4 functions from QWidget
-        QtGui.QWidget.__init__(self, parent)
+	"""
+	Docstring
+	"""
+	def __init__(self, parent=None):
+		"""
+		Docstring
+		"""
+		# load all basic PyQt4 functions from QWidget
+		QtGui.QWidget.__init__(self, parent)
         
-        # load the ui
-        self.ui = Ui_Locomotif()
-        # Ui_Locomotif knows setupUi and retranslateUi methods
-        self.ui.setupUi(self)
+		# load the ui
+		self.ui = Ui_Locomotif()
+		# Ui_Locomotif knows setupUi and retranslateUi methods
+		self.ui.setupUi(self)
 
-        # load tools
-        self.tools = Tools_Locomotif()
-        self.tools.setupTools(self)
-        # rundata = Rundata_Locomotif()
-        rundata.setupRundata(self)
-        # load work
-        self.work = Work_Locomotif()
-        self.work.setupWork(self,self.ui)
+		# load tools
+		self.tools = Tools_Locomotif()
+		self.tools.setupTools(self)
+		# setup global config
+		config.setupConfig(self)
+		# setup global rundata
+		rundata.setupRundata(self)
+		# load work
+		self.work = Work_Locomotif()
+		self.work.setupWork(self,self.ui)
         
-        # create font for data display
-        dataFont = QtGui.QFont()
-        dataFont.setStyleHint(QtGui.QFont.Courier)
-        rundata.setDataFont( self, dataFont )
+		# create font for data display
+		dataFont = QtGui.QFont()
+		dataFont.setStyleHint(QtGui.QFont.Courier)
+		rundata.setDataFont( self, dataFont )
 		
 		# more initialisations
-        self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
-        self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
+		self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
+		self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
+		
+		# load configuration values and stor in config class
+		__base__ = os.path.abspath(os.path.dirname(__file__))
+		config.initConfig( self, __base__ )
+		config.debugConfig()
 
+		# initial values for maps
+		mapWidth = config.getMapWidth()
+		rundata.setMapWidth( self, mapWidth )
+		self.ui.cmdMapWidth.setText(str(mapWidth))
+		mapHeight = config.getMapHeight()
+		rundata.setMapHeight( self, mapHeight )
+		self.ui.cmdMapHeight.setText(str(mapHeight))
+		
 # These are custom slots used within Qt Designer
 
-    def openDataFile(self, Locomotif):
+	def doReadCfgData(self, Locomotif):
+		config.readConfig( self )
+
+	def doStoreCfgData(self, Locomotif):
+		config.storeConfig( self )
+
+	def doSelectDataPath(self, Locomotif):
+		config.selectDataPath(self)
+
+	def doSelectMapPath(self, Locomotif):
+		config.selectMapPath(self)
+
+	def openDataFile(self, Locomotif):
 		""" Load a Data File for Further Processing """
 		dataFilename = self.tools.selectDataFile(self)
 		if dataFilename == "":
@@ -69,21 +99,14 @@ class Locomotif(QtGui.QMainWindow):
 		self.work.markDataOnGoogleMap( self, dataFilename )
 		
 		# initial names for maps
-		mapv1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_v.png"
-		mapv2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_v.png"
+		mapv1Filename = config.getMapPath() + "/map1_v.png"
+		mapv2Filename = config.getMapPath() + "/map2_v.png"
 		rundata.setV1Mapname( self, mapv1Filename )
 		rundata.setV2Mapname( self, mapv2Filename )
 		mapd1Filename = "C:/user/thomas.sonstiges/GitHub/results/map1_d.png"
 		mapd2Filename = "C:/user/thomas.sonstiges/GitHub/results/map2_d.png"
 		rundata.setD1Mapname( self, mapd1Filename )
 		rundata.setD2Mapname( self, mapd2Filename )
-		# initial values for maps
-		mapWidth = 700
-		rundata.setMapWidth( self, mapWidth )
-		self.ui.cmdMapWidth.setText(str(mapWidth))
-		mapHeight = 500
-		rundata.setMapHeight( self, mapHeight )
-		self.ui.cmdMapHeight.setText(str(mapHeight))
 		
 		return 1
 		
@@ -116,15 +139,15 @@ class Locomotif(QtGui.QMainWindow):
 		rundata.debugRundata()
 		return 1
 
-    def openGPSFile(self, Locomotif):
+	def openGPSFile(self, Locomotif):
 		""" Load a GPS File for Further Processing """
 		gpsFileName = self.tools.selectGPSFile(self)
 
-    def openProjectFile(self, Locomotif):
+	def openProjectFile(self, Locomotif):
 		""" Load a Project File for Further Processing """
 		projectFileName = self.tools.selectProjectFile(self)
 
-    def doReadCSV(self, Locomotif):
+	def doReadCSV(self, Locomotif):
 		"""
 		Reload the CSV DataFrames with the given name
 		"""
@@ -132,7 +155,7 @@ class Locomotif(QtGui.QMainWindow):
 		df = rundata.getDF( self )
 		self.work.putCSVIntoTable( self, df )
 
-    def doCreateCluster(self, Locomotif):
+	def doCreateCluster(self, Locomotif):
 		"""
 		Create Cluster for the loaded Dataframe
 		"""
@@ -140,7 +163,7 @@ class Locomotif(QtGui.QMainWindow):
 		c = rundata.getCluster( self )
 		self.ui.t1LoadedDatasets.setText(str(c.getDatasets()))
 
-    def doCreateVPolygone(self, Locomotif):
+	def doCreateVPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
@@ -150,7 +173,7 @@ class Locomotif(QtGui.QMainWindow):
 		self.ui.t1Polygon1View.setText( str(res11) )
 		self.ui.t1Polygon2View.setText( str(res12) )
 
-    def doCreateDPolygone(self, Locomotif):
+	def doCreateDPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
@@ -160,7 +183,7 @@ class Locomotif(QtGui.QMainWindow):
 		self.ui.t1Polygon1View.setText( str(res11) )
 		self.ui.t1Polygon2View.setText( str(res12) )
 
-    def doCreateMaps(self, Locomotif):
+	def doCreateMaps(self, Locomotif):
 		"""
 		Slot for button CreateMap
 		"""

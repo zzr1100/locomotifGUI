@@ -33,20 +33,9 @@ class Tools_Locomotif(object):
 		
     def selectUserFile(self, Locomotif, fcaption, selectedFilter="*.*"):
 		""" Function to select a filename from disk """
-		self.ofDialog = QtGui.QFileDialog(None)
-		self.selectedFileName = self.ofDialog.getOpenFileName(None, "Open "+fcaption+" File", ".", DefaultFilter, selectedFilter )
-		'''
-		self.msgBox = QtGui.QMessageBox(None)
-		self.msgBox.setText("Selected Data-File was \"" + self.selectedFileName + "\"")
-		self.msgBox.exec_()
-		print "----Testausgabe Start"
-		print self
-		print self.ofDialog
-		print self.msgBox
-		print self.selectedFileName
-		print "Testausgabe Ende-----"
-		'''
-		return self.selectedFileName
+		ofDialog = QtGui.QFileDialog(None)
+		selectedFileName = ofDialog.getOpenFileName(None, "Open "+fcaption+" File", ".", DefaultFilter, selectedFilter )
+		return selectedFileName
 
     def readDataFile(self, Locomotif, filePathAndName ):
 		""" Function to read textfile from disk """

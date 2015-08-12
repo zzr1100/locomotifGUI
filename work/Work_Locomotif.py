@@ -16,7 +16,7 @@ class Work_Locomotif(object):
 		self.initialized = 1
 		self.ui = ui
 		self.lastcreated = 0
-    	
+
     def workReadCSV(self, Locomotif, rundata):
 		"""
 		Get the selected Data File Name and read as CSV
@@ -266,8 +266,3 @@ class Work_Locomotif(object):
 			item.setText( str(value[2]) )
 			self.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
 			rowIndex = rowIndex+ 1
-			
-		
-		
-
-		

@@ -23,6 +23,7 @@ uic.compileUiDir("ui/")
 uic.compileUiDir("tools/")
 uic.compileUiDir("data/")
 uic.compileUiDir("work/")
+uic.compileUiDir("config/")
 
 #-----------------------------------------------------------------------------
 # locomotif API 
