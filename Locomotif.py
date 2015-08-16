@@ -51,8 +51,8 @@ class Locomotif(QtGui.QMainWindow):
 		rundata.setDataFont( dataFont )
 		
 		# more initialisations
-		self.ui.mainDataDisplay.setTabText(0,"Datensatz1")
-		self.ui.mainDataDisplay.setTabText(1,"Datensatz2")
+		self.ui.mainDataDisplay.setTabText(0,"Data Record 1")
+		self.ui.mainDataDisplay.setTabText(1,"Data Record 2")
 		self.ui.mainDataDisplay.setCurrentIndex(0)
 		
 		# load configuration values and stor in config class
@@ -91,7 +91,8 @@ class Locomotif(QtGui.QMainWindow):
 			return 0
 		
 		# deactivate all tabs 
-		self.work.workCleanTabs( self, rundata )
+		self.work.workCleanTabs( self, rundata, 0 )
+		self.ui.t1Data.setCurrentIndex(0)
 		
 		# store nme in global data	
 		rundata.setDataFileName( dataFilename )
@@ -138,12 +139,14 @@ class Locomotif(QtGui.QMainWindow):
 		Create Polygone from given cluster
 		"""
 		self.work.workCreateVPolygone(self, rundata )
+		self.work.markPolygonOnGoogleMap(self,rundata.getVoronoi1())
 
 	def doCreateDPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
 		self.work.workCreateDPolygone(self, rundata )
+		self.work.markPolygonOnGoogleMap(self,rundata.getDelaunay1())
 
 	def doCreateMaps(self, Locomotif):
 		"""

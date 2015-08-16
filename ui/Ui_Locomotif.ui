@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1101</width>
+    <width>1130</width>
     <height>751</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>LocomotifGUI</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 232);</string>
@@ -61,7 +61,7 @@
     </property>
     <widget class="QWidget" name="tab_1">
      <attribute name="title">
-      <string>Datensatz 1</string>
+      <string>Data Record  1</string>
      </attribute>
      <widget class="QLabel" name="label_2">
       <property name="geometry">
@@ -73,7 +73,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Datendatei:</string>
+       <string>Data File:</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="t1LoadedDataFilename">
@@ -99,7 +99,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Datasets:</string>
+       <string>Data Sets:</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="t1LoadedDatasets">
@@ -125,11 +125,11 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="t1FileData">
        <attribute name="title">
-        <string>Datei</string>
+        <string>Data File</string>
        </attribute>
        <widget class="QTableWidget" name="t1FileDataView">
         <property name="geometry">
@@ -176,9 +176,49 @@
         <column/>
        </widget>
       </widget>
+      <widget class="QWidget" name="t1GoogleMaps">
+       <attribute name="title">
+        <string>Google Map</string>
+       </attribute>
+       <widget class="QWebView" name="t1GoogleMapsView">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>941</width>
+          <height>521</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="url">
+         <url>
+          <string>about:blank</string>
+         </url>
+        </property>
+       </widget>
+       <widget class="QLabel" name="t1GoogleMapsHint">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="t1DataFrame">
        <attribute name="title">
-        <string>Geladene Daten</string>
+        <string>Loaded Data Sets</string>
        </attribute>
        <widget class="QTableWidget" name="t1DataFrameView">
         <property name="enabled">
@@ -223,7 +263,7 @@
        <attribute name="title">
         <string>V-Polygon1</string>
        </attribute>
-       <widget class="QTextEdit" name="t1Polygon1View">
+       <widget class="QTableWidget" name="t1Polygon1View">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -233,9 +273,26 @@
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-font: 8pt &quot;Courier New&quot;;</string>
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>2</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
        </widget>
       </widget>
       <widget class="QWidget" name="t1Polygon2">
@@ -245,7 +302,10 @@ font: 8pt &quot;Courier New&quot;;</string>
        <attribute name="title">
         <string>V-Polygon2</string>
        </attribute>
-       <widget class="QTextEdit" name="t1Polygon2View">
+       <widget class="QTableWidget" name="t1Polygon2View">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -255,9 +315,26 @@ font: 8pt &quot;Courier New&quot;;</string>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-font: 8pt &quot;Courier New&quot;;</string>
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>2</number>
+        </property>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <row/>
+        <column/>
+        <column/>
        </widget>
       </widget>
       <widget class="QWidget" name="t1Map1">
@@ -296,17 +373,17 @@ font: 8pt &quot;Courier New&quot;;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="t1GoogleMaps">
+      <widget class="QWidget" name="t1GoogleMaps2">
        <attribute name="title">
         <string>Google Map</string>
        </attribute>
-       <widget class="QWebView" name="t1GoogleMapsView">
+       <widget class="QWebView" name="t1GoogleMaps2View">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>921</width>
-          <height>541</height>
+          <y>20</y>
+          <width>941</width>
+          <height>521</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -318,12 +395,34 @@ font: 8pt &quot;Courier New&quot;;</string>
          </url>
         </property>
        </widget>
+       <widget class="QLabel" name="t1GoogleMaps2Hint">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>941</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
      </widget>
+     <zorder>t1Data</zorder>
+     <zorder>label_2</zorder>
+     <zorder>t1LoadedDataFilename</zorder>
+     <zorder>label_3</zorder>
+     <zorder>t1LoadedDatasets</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Datensatz 2</string>
+      <string>Data Record 2</string>
      </attribute>
     </widget>
    </widget>
@@ -333,13 +432,13 @@ font: 8pt &quot;Courier New&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1101</width>
+     <width>1130</width>
      <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Datei</string>
+     <string>File</string>
     </property>
     <addaction name="actionLoadDataFile"/>
     <addaction name="actionLoadGPSFile"/>
@@ -349,7 +448,7 @@ font: 8pt &quot;Courier New&quot;;</string>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
-     <string>Bearbeiten</string>
+     <string>Edit</string>
     </property>
     <addaction name="actionCommands"/>
     <addaction name="actionEdit"/>
@@ -462,7 +561,7 @@ background-color: rgb(255, 255, 255);</string>
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Auswertung</string>
+    <string>Working Steps</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -478,7 +577,7 @@ background-color: rgb(255, 255, 255);</string>
       </rect>
      </property>
      <property name="text">
-      <string>Datendatei</string>
+      <string>Data File:</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="loadedDataFilename">
@@ -486,7 +585,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>101</width>
+       <width>111</width>
        <height>20</height>
       </rect>
      </property>
@@ -496,7 +595,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>101</width>
+       <width>111</width>
        <height>23</height>
       </rect>
      </property>
@@ -504,7 +603,7 @@ background-color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: rgb(220, 220, 220);</string>
      </property>
      <property name="text">
-      <string>CSV einlesen</string>
+      <string>Create Data Frames</string>
      </property>
     </widget>
     <widget class="QPushButton" name="cmdCreateVPolygone">
@@ -512,7 +611,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>90</y>
-       <width>101</width>
+       <width>111</width>
        <height>23</height>
       </rect>
      </property>
@@ -520,7 +619,7 @@ background-color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: rgb(220, 220, 220);</string>
      </property>
      <property name="text">
-      <string>V-Polygone ber.</string>
+      <string>Calculate V Polynoms</string>
      </property>
     </widget>
     <widget class="QPushButton" name="cmdCreateMaps">
@@ -528,7 +627,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>220</y>
-       <width>101</width>
+       <width>111</width>
        <height>23</height>
       </rect>
      </property>
@@ -536,7 +635,7 @@ background-color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: rgb(220, 220, 220);</string>
      </property>
      <property name="text">
-      <string>Erstellen</string>
+      <string>Create Maps</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -554,7 +653,7 @@ background-color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="text">
-      <string>Karten:</string>
+      <string>Maps</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="cmdMapWidth">
@@ -582,7 +681,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>120</y>
-       <width>101</width>
+       <width>111</width>
        <height>23</height>
       </rect>
      </property>
@@ -590,7 +689,7 @@ background-color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: rgb(220, 220, 220);</string>
      </property>
      <property name="text">
-      <string>D-Polygone ber.</string>
+      <string>Calculate D Polynoms</string>
      </property>
     </widget>
    </widget>
@@ -612,12 +711,12 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionHilfe">
    <property name="text">
-    <string>Hilfe</string>
+    <string>Help</string>
    </property>
   </action>
   <action name="actionEinstellungen">
    <property name="text">
-    <string>Einstellungen</string>
+    <string>Settings...</string>
    </property>
   </action>
   <action name="actionInfo">
@@ -627,7 +726,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionEdit">
    <property name="text">
-    <string>Aktueller Datensatz</string>
+    <string>Current Data Set</string>
    </property>
   </action>
   <action name="actionCommands">
@@ -637,7 +736,7 @@ background-color: rgb(255, 255, 255);</string>
   </action>
   <action name="actionLoadDataFile">
    <property name="text">
-    <string>Datensatz auswählen...</string>
+    <string>Open Data File...</string>
    </property>
   </action>
  </widget>

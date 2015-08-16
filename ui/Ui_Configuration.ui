@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Settings</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -21,6 +21,9 @@
      <width>341</width>
      <height>32</height>
     </rect>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -39,7 +42,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Pfad zu Map-Dateien:</string>
+    <string>Path for Map Files</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -52,7 +55,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Pfad zu Datendateien:</string>
+    <string>Path for Data Files</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="editCfgMapPath">
@@ -91,7 +94,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Auswahl</string>
+    <string>Browse</string>
    </property>
   </widget>
   <widget class="QPushButton" name="cmdSelCfgMapPath">
@@ -104,7 +107,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Auswahl</string>
+    <string>Browse</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">
@@ -117,7 +120,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Kartengröße</string>
+    <string>Map Dimesions</string>
    </property>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
@@ -129,7 +132,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Breite:</string>
+     <string>Width:</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
@@ -142,7 +145,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Höhe:</string>
+     <string>Height</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="editCfgMapWidth">

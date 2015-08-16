@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/Ui_Configuration.ui'
 #
-# Created: Sat Aug 15 00:24:19 2015
+# Created: Sun Aug 16 20:44:50 2015
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,6 +29,7 @@ class Ui_Configuration(object):
         Configuration.resize(651, 311)
         self.buttonBox = QtGui.QDialogButtonBox(Configuration)
         self.buttonBox.setGeometry(QtCore.QRect(290, 200, 341, 32))
+        self.buttonBox.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
@@ -78,12 +79,12 @@ class Ui_Configuration(object):
         QtCore.QMetaObject.connectSlotsByName(Configuration)
 
     def retranslateUi(self, Configuration):
-        Configuration.setWindowTitle(_translate("Configuration", "Dialog", None))
-        self.label_6.setText(_translate("Configuration", "Pfad zu Map-Dateien:", None))
-        self.label_5.setText(_translate("Configuration", "Pfad zu Datendateien:", None))
-        self.cmdSelCfgDataPath.setText(_translate("Configuration", "Auswahl", None))
-        self.cmdSelCfgMapPath.setText(_translate("Configuration", "Auswahl", None))
-        self.groupBox.setTitle(_translate("Configuration", "Kartengröße", None))
-        self.label_7.setText(_translate("Configuration", "Breite:", None))
-        self.label_8.setText(_translate("Configuration", "Höhe:", None))
+        Configuration.setWindowTitle(_translate("Configuration", "Settings", None))
+        self.label_6.setText(_translate("Configuration", "Path for Map Files", None))
+        self.label_5.setText(_translate("Configuration", "Path for Data Files", None))
+        self.cmdSelCfgDataPath.setText(_translate("Configuration", "Browse", None))
+        self.cmdSelCfgMapPath.setText(_translate("Configuration", "Browse", None))
+        self.groupBox.setTitle(_translate("Configuration", "Map Dimesions", None))
+        self.label_7.setText(_translate("Configuration", "Width:", None))
+        self.label_8.setText(_translate("Configuration", "Height", None))
 

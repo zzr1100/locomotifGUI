@@ -24,6 +24,7 @@ uic.compileUiDir("tools/")
 uic.compileUiDir("data/")
 uic.compileUiDir("work/")
 uic.compileUiDir("config/")
+uic.compileUiDir("polyline/")
 
 #-----------------------------------------------------------------------------
 # locomotif API 
