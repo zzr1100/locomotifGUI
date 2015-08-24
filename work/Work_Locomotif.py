@@ -112,6 +112,7 @@ class Work_Locomotif(object):
 			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
 			return
 		
+		
 		# Daten fuer Polygone berechnen
 		res11, ref = c.delaunay('biomass')
 		rundata.setDelaunay1( res11, ref )
@@ -134,8 +135,7 @@ class Work_Locomotif(object):
 		# stored polygons
 		res11 = rundata.getVoronoi1();
 		res12 = rundata.getVoronoi2();
-		locapp.ui.t1Data.setCurrentIndex(5)
-		rundata.debugRundata()
+		locapp.ui.t1Data.setCurrentIndex(6)
 
     def workCreateDMaps(self, locapp, rundata):
 		# new size form input fields
@@ -146,8 +146,7 @@ class Work_Locomotif(object):
 		# stored polygons
 		res11 = rundata.getDelaunay1();
 		res12 = rundata.getDelaunay2();
-		locapp.ui.t1Data.setCurrentIndex(5)
-		rundata.debugRundata()
+		locapp.ui.t1Data.setCurrentIndex(6)
 
     def workCreateMaps(self, locapp, rundata):
 		"""
@@ -176,11 +175,17 @@ class Work_Locomotif(object):
 			map1Filename = rundata.getV1Mapname()
 			map2Filename = rundata.getV2Mapname()
 			# stored polygons
-			res11 = rundata.getVoronoi1();
-			res12 = rundata.getVoronoi2();
+			res11org = rundata.getVoronoi1();
+			res12org = rundata.getVoronoi2();
+			# switch the point values, seems that the mapper
+			# request points as (lon,lat) and not (lat,lon)
+			# res11 = locapp.tools.modifyPolygonValues(res11org)
+			# res12 = locapp.tools.modifyPolygonValues(res12org)
+			res11 = res11org
+			res12 = res12org
 			# create new maps for current cluster
-			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=map1Filename )
-			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12,out_path=map2Filename )
+			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=str(map1Filename) )
+			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12,out_path=str(map2Filename) )
 
 		if self.lastcreated == 2: 
 			# stored filenames
@@ -190,8 +195,8 @@ class Work_Locomotif(object):
 			res11 = rundata.getDelaunay1();
 			res12 = rundata.getDelaunay2();
 			# create new maps for current cluster
-			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=map1Filename )
-			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12,out_path=map2Filename )
+			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=str(map1Filename) )
+			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12,out_path=str(map2Filename) )
 			
 		# Show Maps
 		scene1 = QtGui.QGraphicsScene();
@@ -200,8 +205,7 @@ class Work_Locomotif(object):
 		scene2 = QtGui.QGraphicsScene();
 		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
 		locapp.ui.t1Map2View.setScene(scene2);
-		locapp.ui.t1Data.setCurrentIndex(5)
-		rundata.debugRundata()
+		locapp.ui.t1Data.setCurrentIndex(6)
 		
     def readDataFileIntoTable(self, locapp, filePathAndName ):
 		""" 
@@ -239,15 +243,21 @@ class Work_Locomotif(object):
 			rowIndex = rowIndex+ 1
 		fhdl.close()
 
-    def markDataOnGoogleMap(self, locapp, filePathAndName):
+    def markDataOnGoogleMap(self, locapp, rundata):
 		""" display google map with data points marked """
+		# new size form input fields
+		mapWidth, okw = locapp.ui.t1GMMapWidth.text().toInt(10)
+		mapHeight, okh = locapp.ui.t1GMMapHeight.text().toInt(10)
+		rundata.setGoogleMapWidth( mapWidth )
+		rundata.setGoogleMapHeight( mapHeight )
 		# prepare GOOGLE MAPS url
 		maphint = locapp.ui.t1GoogleMapsHint
 		map = locapp.ui.t1GoogleMapsView
-		url = "http://maps.google.com/maps/api/staticmap?maptype=hybrid&sensor=false&language=de"
-		url = url + "&size=750x550"
+		url = "http://maps.google.com/maps/api/staticmap?sensor=false&language=de"
+		url = url + "&size="+str(mapWidth)+"x"+str(mapHeight)
+		url = url + "&maptype=" + rundata.getGoogle1Maptype()
 		# read file and append markers
-		fhdl = QtCore.QFile(filePathAndName)
+		fhdl = QtCore.QFile(rundata.getDataFileName())
 		fhdl.open(QtCore.QIODevice.ReadWrite)
 		istream = QtCore.QTextStream(fhdl)
 		# skip header line
@@ -258,12 +268,15 @@ class Work_Locomotif(object):
 			line = istream.readLine()
 			numl = numl + 1
 			values = line.split(';')
+			#print "marker-lat = " + values[0]
+			#print "marker-lon = " + values[1]
 			urlpart = "&markers="+str(values[0])+","+str(values[1])
 			if (len(url)+len(urlpart)) < 1850:
 				url = url + "&" + urlpart
 				nump = nump + 1	
 			
 		# display
+		print url
 		map.load( QtCore.QUrl(url))
 		# display a hint if not all lines are displayed in the map
 		if nump < numl:
@@ -344,13 +357,19 @@ class Work_Locomotif(object):
 			uiTable.setItem( rowIndex, colIndex, item )
 			rowIndex = rowIndex+ 1
 
-    def markPolygonOnGoogleMap(self, locapp, pres):
+    def markPolygonOnGoogleMap(self, locapp, rundata, pres):
 		""" display google map with data points marked """
+		# new size form input fields
+		mapWidth, okw = locapp.ui.t1GM2MapWidth.text().toInt(10)
+		mapHeight, okh = locapp.ui.t1GM2MapHeight.text().toInt(10)
+		rundata.setGoogleMapWidth( mapWidth )
+		rundata.setGoogleMapHeight( mapHeight )
 		# prepare GOOGLE MAPS url
 		maphint = locapp.ui.t1GoogleMaps2Hint
 		map = locapp.ui.t1GoogleMaps2View
-		url = "http://maps.google.com/maps/api/staticmap?maptype=hybrid&sensor=false&language=de"
-		url = url + "&size=750x550"
+		url = "http://maps.google.com/maps/api/staticmap?sensor=false&language=de"
+		url = url + "&size="+str(mapWidth)+"x"+str(mapHeight)
+		url = url + "&maptype=" + rundata.getGoogle2Maptype()
 		# scan polygone and append markers
 		num = 0
 		for geomvalue in pres.geometry:
@@ -394,7 +413,7 @@ class Work_Locomotif(object):
 			
 			# total path length must be < 2048
 			# internal conversion to cgi causes special chars to be length 3
-			# so we calculate with a len < 1950
+			# so we calculate with a len < 1850
 			# if num < 29:
 			if (len(url)+len(urlpart)) < 1850:
 				url = url + "&" + urlpart
@@ -404,5 +423,18 @@ class Work_Locomotif(object):
 		map.load( QtCore.QUrl(url))
 		# display a hint if not all lines are displayed in the map
 		if num < len(pres.geometry):
-			maphint.setText("ATTENTION: Big data, not all polygones may be displayed at the same time")
-			
+			print "#num polygones = " + str(len(pres.geometry))
+			print "#num in display = " + str(num)
+			hint = "ATTENTION: Big data, url too long, only "+str(num)+" of "+str(len(pres.geometry))+" polygones displayed"
+			maphint.setText( hint )
+		else:
+			maphint.setText("")
+
+    def refreshPolygonOnGoogleMap(self, locapp, rundata ):
+		if self.lastcreated==1:
+			self.markPolygonOnGoogleMap( locapp, rundata, rundata.getVoronoi1() )
+			return
+		if self.lastcreated==2:
+			self.markPolygonOnGoogleMap( locapp, rundata, rundata.getDelaunay1() )
+			return
+	

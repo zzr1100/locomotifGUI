@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1130</width>
+    <width>1211</width>
     <height>751</height>
    </rect>
   </property>
@@ -25,7 +25,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>971</width>
+      <width>991</width>
       <height>701</height>
      </rect>
     </property>
@@ -124,8 +124,11 @@
         <height>571</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(240, 240, 240);</string>
+      </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="t1FileData">
        <attribute name="title">
@@ -183,14 +186,14 @@
        <widget class="QWebView" name="t1GoogleMapsView">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>100</x>
           <y>20</y>
-          <width>941</width>
-          <height>521</height>
+          <width>843</width>
+          <height>526</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(240, 240, 240);</string>
         </property>
         <property name="url">
          <url>
@@ -203,7 +206,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>941</width>
+          <width>947</width>
           <height>20</height>
          </rect>
         </property>
@@ -213,6 +216,138 @@ color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GMmaptype">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>hybrid</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GMmaptype_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>satellite</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GMmaptype_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>roadmap</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GMmaptype_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>terrain</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>46</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Maptype</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="t1GMMapWidth">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>170</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>150</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="t1GMMapHeight">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>170</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>170</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>x</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </widget>
@@ -337,6 +472,178 @@ color: rgb(255, 0, 0);</string>
         <column/>
        </widget>
       </widget>
+      <widget class="QWidget" name="t1GoogleMaps2">
+       <attribute name="title">
+        <string>Google Map</string>
+       </attribute>
+       <widget class="QWebView" name="t1GoogleMaps2View">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>20</y>
+          <width>843</width>
+          <height>526</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(240, 240, 240);</string>
+        </property>
+        <property name="url">
+         <url>
+          <string>about:blank</string>
+         </url>
+        </property>
+       </widget>
+       <widget class="QLabel" name="t1GoogleMaps2Hint">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>947</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GM2maptype">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>hybrid</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GM2maptype_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>satellite</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GM2maptype_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>roadmap</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="t1GM2maptype_4">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>82</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>terrain</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="t1GM2MapWidth">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="t1GM2MapHeight">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>180</y>
+          <width>31</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>180</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>x</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>160</y>
+          <width>31</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>46</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Maptype</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="t1Map1">
        <attribute name="title">
         <string>Map1</string>
@@ -373,46 +680,6 @@ color: rgb(255, 0, 0);</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="t1GoogleMaps2">
-       <attribute name="title">
-        <string>Google Map</string>
-       </attribute>
-       <widget class="QWebView" name="t1GoogleMaps2View">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>20</y>
-          <width>941</width>
-          <height>521</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="url">
-         <url>
-          <string>about:blank</string>
-         </url>
-        </property>
-       </widget>
-       <widget class="QLabel" name="t1GoogleMaps2Hint">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>941</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(255, 0, 0);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
      </widget>
      <zorder>t1Data</zorder>
      <zorder>label_2</zorder>
@@ -432,7 +699,7 @@ color: rgb(255, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1130</width>
+     <width>1211</width>
      <height>21</height>
     </rect>
    </property>
@@ -472,7 +739,7 @@ color: rgb(255, 0, 0);</string>
    <property name="minimumSize">
     <size>
      <width>120</width>
-     <height>139</height>
+     <height>168</height>
     </size>
    </property>
    <property name="maximumSize">
@@ -538,6 +805,16 @@ background-color: rgb(255, 255, 255);</string>
        </property>
        <property name="text">
         <string>Select Project</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="2">
+      <widget class="QPushButton" name="cmdDebug">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 170, 255);</string>
+       </property>
+       <property name="text">
+        <string>DEBUG</string>
        </property>
       </widget>
      </item>
@@ -661,7 +938,7 @@ background-color: rgb(255, 255, 255);</string>
       <rect>
        <x>10</x>
        <y>190</y>
-       <width>41</width>
+       <width>31</width>
        <height>20</height>
       </rect>
      </property>
@@ -669,9 +946,9 @@ background-color: rgb(255, 255, 255);</string>
     <widget class="QLineEdit" name="cmdMapHeight">
      <property name="geometry">
       <rect>
-       <x>60</x>
+       <x>70</x>
        <y>190</y>
-       <width>41</width>
+       <width>31</width>
        <height>20</height>
       </rect>
      </property>
@@ -690,6 +967,22 @@ background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>Calculate D Polynoms</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>190</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>x</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -885,7 +1178,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>495</y>
+     <y>465</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
@@ -917,7 +1210,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>83</x>
-     <y>365</y>
+     <y>335</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -933,7 +1226,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>395</y>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>554</x>
@@ -973,6 +1266,150 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>t1GMmaptype</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGMMaptype1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>196</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GMmaptype_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGMMaptype2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>367</x>
+     <y>-10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GMmaptype_3</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGMMaptype3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GMmaptype_4</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGMMaptype4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GM2maptype</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGM2Maptype1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>195</x>
+     <y>198</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GM2maptype_2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGM2Maptype2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GM2maptype_3</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGM2Maptype3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>t1GM2maptype_4</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doSelectGM2Maptype4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>564</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdDebug</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doDebugToConsole()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>25</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>-6</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openUserFile()</slot>
@@ -988,5 +1425,14 @@ background-color: rgb(255, 255, 255);</string>
   <slot>doSelectDataPath()</slot>
   <slot>doSelectMapPath()</slot>
   <slot>doConfigDialog()</slot>
+  <slot>doSelectGMMaptype1()</slot>
+  <slot>doSelectGMMaptype2()</slot>
+  <slot>doSelectGMMaptype3()</slot>
+  <slot>doSelectGMMaptype4()</slot>
+  <slot>doSelectGM2Maptype1()</slot>
+  <slot>doSelectGM2Maptype2()</slot>
+  <slot>doSelectGM2Maptype3()</slot>
+  <slot>doSelectGM2Maptype4()</slot>
+  <slot>doDebugToConsole()</slot>
  </slots>
 </ui>

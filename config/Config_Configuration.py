@@ -16,13 +16,21 @@ class Config_Configuration(object):
 		self.dataPath = ""
 		self.mapPath = ""
 		self.mapWidth = 700
-		self.mapHeight = 600
+		self.mapHeight = 550
+		self.googleMapWidth = 700
+		self.googleMapHeight = 550
+		self.google1Maptype = "hybrid"
+		self.google2Maptype = "hybrid"
 
 	def debugConfig(self):
 		print "DataPath = " + self.dataPath
 		print "MapPath = " + self.mapPath
 		print "MapWidth = " + str(self.mapWidth)
 		print "MapHeight = " + str(self.mapHeight)
+		print "GoogleMapWidth = " + str(self.googleMapWidth)
+		print "GoogleMapHeight = " + str(self.googleMapHeight)
+		print "Google 1 Maptype = " + self.google1Maptype
+		print "Google 2 Maptype = " + self.google2Maptype
 
 	def initConfig(self, homePath):
 		# read configuration file
@@ -33,7 +41,11 @@ class Config_Configuration(object):
 		self.dataPath = parentDir + "\\sample_data"
 		self.mapPath = parentDir + "\\results"
 		self.mapWidth = 700
-		self.mapHeight = 600
+		self.mapHeight = 550
+		self.googleMapWidth = 700
+		self.googleMapHeight = 550
+		self.google1Maptype = "hybrid"
+		self.google2Maptype = "hybrid"
 
 	def setDataPath( self, path ):
 		self.dataPath = path
@@ -59,6 +71,31 @@ class Config_Configuration(object):
 	def getMapHeight( self ):
 		return self.mapHeight
 
+	def setGoogleMapWidth( self, width ):
+		self.googleMapWidth = width
+
+	def getGoogleMapWidth( self ):
+		return self.googleMapWidth
+
+	def setGoogleMapHeight( self, height ):
+		self.googleMapHeight = height
+
+	def getGoogleMapHeight( self ):
+		return self.googleMapHeight
+
+	def setGoogle1Maptype( self, maptype ):
+		self.google1Maptype = maptype
+
+	def getGoogle1Maptype( self ):
+		return self.google1Maptype
+
+	def setGoogle2Maptype( self, maptype ):
+		self.google2Maptype = maptype
+
+	def getGoogle2Maptype( self ):
+		return self.google2Maptype
+
+		
 # Global Config Data to be used throughout the application
 		
 configData = Config_Configuration()

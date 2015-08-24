@@ -12,9 +12,9 @@ class Rundata_Locomotif(object):
 	Docstring
 	"""
 	def setupRundata(self):
-		self.dataFilename = ""
-		self.gpsFilename = ""
-		self.projectFilename = ""
+		self.datafilename = ""
+		self.gpsfilename = ""
+		self.projectfilename = ""
 		self.df = None
 		self.cluster = None
 		self.voronoi1values = None
@@ -31,39 +31,53 @@ class Rundata_Locomotif(object):
 		self.mapv2filename = ""
 		self.mapd1filename = ""
 		self.mapd2filename = ""
+		self.googlemapwidth = 0
+		self.googlemapheight = 0
+		self.google1maptype = "hybrid"
+		self.google2maptype = "hybrid"
 
 	def debugRundata(self):
 		print "DataFilename = " + self.datafilename
-		print "GPSFilename = " + self.gpsFilename
-		print "ProjectFilename = " + self.projectFilename
-		print "DataFrame = "
-		print self.df
-		print "Cluster Datasets = "
-		print self.cluster.getDatasets()
-		print "Voronoi1 REF = " + self.voronoi1ref
-		print "Voronoi1 values = "
-		print self.voronoi1values
-		print "Voronoi2 REF = " + self.voronoi2ref
-		print "Voronoi2 values = "
-		print self.voronoi2values
-		print "Delaunay1 REF = " + self.delaunay1ref
-		print "Delaunay1 values = "
-		print self.delaunay1values
-		print "Delaunay2 REF = " + self.delaunay2ref
-		print "Delaunay2 values = "
-		print self.delaunay2values
+		print "GPSFilename = " + self.gpsfilename
+		print "ProjectFilename = " + self.projectfilename
 		print "Map Width = " + str(self.mapwidth)
 		print "Map Height = " + str(self.mapheight)
 		print "MapV1Filename = " + self.mapv1filename
 		print "MapV2Filename = " + self.mapv2filename
 		print "MapD1Filename = " + self.mapd1filename
 		print "MapD2Filename = " + self.mapd2filename
+		print "Google Map Width = " + str(self.googlemapwidth)
+		print "Google Map Height = " + str(self.googlemapheight)
+		print "Google1Maptype = " + self.google1maptype
+		print "Google2Maptype = " + self.google2maptype
+		print "DataFrame = "
+		print self.df
+		if self.cluster != None:
+			print "Cluster Datasets = " + str(self.cluster.getDatasets())
+		else:
+			print "No Cluster data present"
+		print "Voronoi1 REF = "
+		print self.voronoi1ref
+		print "Voronoi1 values = "
+		print self.voronoi1values
+		print "Voronoi2 REF = "
+		print self.voronoi2ref
+		print "Voronoi2 values = "
+		print self.voronoi2values
+		print "Delaunay1 REF = "
+		print self.delaunay1ref
+		print "Delaunay1 values = "
+		print self.delaunay1values
+		print "Delaunay2 REF = "
+		print self.delaunay2ref
+		print "Delaunay2 values = "
+		print self.delaunay2values
 
 	def cleanBuffer( self ):
 		print "Clean RUndata"
-		self.dataFilename = ""
-		self.gpsFilename = ""
-		self.projectFilename = ""
+		self.datafilename = ""
+		self.gpsfilename = ""
+		self.projectfilename = ""
 		self.df = None
 		self.cluster = None
 		self.voronoi1values = None
@@ -80,6 +94,11 @@ class Rundata_Locomotif(object):
 		self.mapv2filename = ""
 		self.mapd1filename = ""
 		self.mapd2filename = ""
+		# leave these current values
+		# self.googlemapwidth = 0
+		# self.googlemapheight = 0
+		#self.google1Maptype = "hybrid"
+		#self.google2Maptype = "hybrid"
 	
 	def setDataFont( self, font ):
 		self.datafont = font
@@ -90,11 +109,14 @@ class Rundata_Locomotif(object):
 	def setDataFileName( self, fname ):
 		self.datafilename = str(fname)
 
+	def getDataFileName( self ):
+		return self.datafilename
+		
 	def setGpsFileName( self, fname ):
-		self.gpsFilename = str(fname)
+		self.gpsfilename = str(fname)
 
 	def setProjectFileName( self, fname ):
-		self.projectFilename = str(fname)
+		self.projectfilename = str(fname)
 		
 	def setDF( self, df ):
 		self.df = df		
@@ -138,9 +160,15 @@ class Rundata_Locomotif(object):
 
 	def setMapWidth( self, w ):
 		self.mapwidth = w
+
+	def getMapWidth( self ):
+		return self.mapwidth
 		
 	def setMapHeight( self, h ):
 		self.mapheight = h
+
+	def getMapHeight( self ):
+		return self.mapheight
 		
 	def setV1Mapname( self, filename ):
 		self.mapv1filename = filename
@@ -166,6 +194,29 @@ class Rundata_Locomotif(object):
 	def getD2Mapname( self ):
 		return self.mapd2filename
 
+	def setGoogleMapWidth( self, w ):
+		self.googlemapwidth = w
+
+	def getGoogleMapWidth( self ):
+		return self.googlemapwidth
+		
+	def setGoogleMapHeight( self, h ):
+		self.googlemapheight = h
+
+	def getGoogleMapHeight( self ):
+		return self.googlemapheight
+
+	def setGoogle1Maptype( self, maptype ):
+		self.google1maptype = maptype
+
+	def getGoogle1Maptype( self ):
+		return self.google1maptype
+
+	def setGoogle2Maptype( self, maptype ):
+		self.google2maptype = maptype
+
+	def getGoogle2Maptype( self ):
+		return self.google2maptype
 
 		
 		

@@ -24,7 +24,7 @@ class Tools_Locomotif(object):
 		self.currentFilename = "tbd"
     	
 	def selectDataFile(self):
-		os.chdir( configData.getDataPath() )
+		os.chdir( str(configData.getDataPath()) )
 		return self.selectUserFile("Data",DataFilter)
 
 	def selectGPSFile(self):
@@ -67,6 +67,33 @@ class Tools_Locomotif(object):
 		msgBox.setText(text)
 		msgBox.exec_()
 
+	def modifyPolygonValues( self, orgPolygon ):
+		modPolygon = orgPolygon
+		rowIndex = 0
+		for geomvalue in orgPolygon.geometry:
+			print orgPolygon.geometry[rowIndex]
+			orgline = str(geomvalue)
+			orgline = orgline.replace( "POLYGON ((", "")
+			orgline = orgline.replace( "))", "")
+			orgpoints = orgline.split(",")
+			pointIndex = 0
+			newline = "POLYGON (("
+			for orgpoint in orgpoints:
+				orgpvalues = orgpoint.split(" ")
+				orglat = orgpvalues[0]
+				orglon = orgpvalues[1]
+				# swap lat and lon
+				newpoint = orglon + " " + orglat
+				if pointIndex>0:
+					newline = newline + ","
+				newline = newline + newpoint
+				pointIndex = pointIndex + 1
+			newline = newline + "))"	
+			print newline
+			modPolygon.geometry[rowIndex] = newline
+			rowIndex = rowIndex + 1
+		return modPolygon	
+		
 	def encodeGoogleMapsPath( self, srcPoints ):
 		"""
 		Punkteliste fuer Path auf Googla maps codieren

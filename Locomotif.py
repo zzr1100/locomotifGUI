@@ -67,22 +67,72 @@ class Locomotif(QtGui.QMainWindow):
 		mapHeight = configData.getMapHeight()
 		rundata.setMapHeight( mapHeight )
 		self.ui.cmdMapHeight.setText(str(mapHeight))
+
+		# initial values for google maps
+		mapWidth = configData.getGoogleMapWidth()
+		rundata.setGoogleMapWidth( mapWidth )
+		self.ui.t1GMMapWidth.setText(str(mapWidth))
+		self.ui.t1GM2MapWidth.setText(str(mapWidth))
+		mapHeight = configData.getGoogleMapHeight()
+		rundata.setGoogleMapHeight( mapHeight )
+		self.ui.t1GMMapHeight.setText(str(mapWidth))
+		self.ui.t1GM2MapHeight.setText(str(mapWidth))
 		
 # These are custom slots used within Qt Designer
+
+	def doDebugToConsole(self, Locomotif):
+		configData.debugConfig()
+		rundata.debugRundata()
 
 	def doConfigDialog(self, Locomotif):
 		print "open configuration dialog"
 		dialog = ConfigDialog(self)
 		dialog.setModal(1)
 		ret = dialog.exec_()
-		# transfer some values
+		
+		# transfer (new) map sizes
 		mapWidth = configData.getMapWidth()
 		rundata.setMapWidth( mapWidth )
 		self.ui.cmdMapWidth.setText(str(mapWidth))
 		mapHeight = configData.getMapHeight()
 		rundata.setMapHeight( mapHeight )
 		self.ui.cmdMapHeight.setText(str(mapHeight))
-				
+		
+		# transfer (new) google maps settings
+		mapWidth = configData.getGoogleMapWidth()
+		rundata.setGoogleMapWidth( mapWidth )
+		self.ui.t1GMMapWidth.setText(str(mapWidth))
+		self.ui.t1GM2MapWidth.setText(str(mapWidth))
+		mapHeight = configData.getGoogleMapHeight()
+		rundata.setGoogleMapHeight( mapHeight )
+		self.ui.t1GMMapHeight.setText(str(mapHeight))
+		self.ui.t1GM2MapHeight.setText(str(mapHeight))
+		
+		maptype = configData.getGoogle1Maptype()
+		rundata.setGoogle1Maptype( maptype )
+		# followinfg values must fit to combobox in configuration
+		if maptype == "hybrid":
+			self.ui.t1GMmaptype.setChecked(True)
+		if maptype == "satellite":
+			self.ui.t1GMmaptype_2.setChecked(True)
+		if maptype == "roadmap":
+			self.ui.t1GMmaptype_3.setChecked(True)
+		if maptype == "terrain":
+			self.ui.t1GMmaptype_4.setChecked(True)
+		
+		maptype = configData.getGoogle2Maptype()
+		rundata.setGoogle2Maptype( maptype )
+		self.ui.t1GM2maptype_2.setChecked(True)
+		# followinfg values must fit to combobox in configuration
+		if maptype == "hybrid":
+			self.ui.t1GM2maptype.setChecked(True)
+		if maptype == "satellite":
+			self.ui.t1GM2maptype_2.setChecked(True)
+		if maptype == "roadmap":
+			self.ui.t1GM2maptype_3.setChecked(True)
+		if maptype == "terrain":
+			self.ui.t1GM2maptype_4.setChecked(True)
+		
 	def openDataFile(self, Locomotif):
 		""" Load a Data File for Further Processing """
 		dataFilename = self.tools.selectDataFile()
@@ -100,7 +150,8 @@ class Locomotif(QtGui.QMainWindow):
 		self.ui.t1LoadedDataFilename.setText(dataFilename)
 		# load and display initial data
 		self.work.readDataFileIntoTable( self, dataFilename )
-		self.work.markDataOnGoogleMap( self, dataFilename )
+		self.work.markDataOnGoogleMap( self, rundata )
+		print "data marked on google map type " + rundata.getGoogle1Maptype()
 		
 		# initial names for maps
 		mapv1Filename = configData.getMapPath() + "/map1_v.png"
@@ -122,6 +173,22 @@ class Locomotif(QtGui.QMainWindow):
 		""" Load a Project File for Further Processing """
 		projectFileName = self.tools.selectProjectFile()
 
+	def doSelectGMMaptype1(self, Locomotif):
+		rundata.setGoogle1Maptype("hybrid");
+		self.work.markDataOnGoogleMap( self, rundata )
+
+	def doSelectGMMaptype2(self, Locomotif):
+		rundata.setGoogle1Maptype("satellite");
+		self.work.markDataOnGoogleMap( self, rundata )
+
+	def doSelectGMMaptype3(self, Locomotif):
+		rundata.setGoogle1Maptype("roadmap");
+		self.work.markDataOnGoogleMap( self, rundata )
+
+	def doSelectGMMaptype4(self, Locomotif):
+		rundata.setGoogle1Maptype("terrain");
+		self.work.markDataOnGoogleMap( self, rundata )
+
 	def doReadCSV(self, Locomotif):
 		"""
 		Reload the CSV DataFrames with the given name
@@ -139,21 +206,36 @@ class Locomotif(QtGui.QMainWindow):
 		Create Polygone from given cluster
 		"""
 		self.work.workCreateVPolygone(self, rundata )
-		self.work.markPolygonOnGoogleMap(self,rundata.getVoronoi1())
+		self.work.markPolygonOnGoogleMap(self, rundata, rundata.getVoronoi1() )
 
 	def doCreateDPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
 		self.work.workCreateDPolygone(self, rundata )
-		self.work.markPolygonOnGoogleMap(self,rundata.getDelaunay1())
+		self.work.markPolygonOnGoogleMap(self, rundata, rundata.getDelaunay1() )
+
+	def doSelectGM2Maptype1(self, Locomotif):
+		rundata.setGoogle2Maptype("hybrid");
+		self.work.refreshPolygonOnGoogleMap( self, rundata )
+
+	def doSelectGM2Maptype2(self, Locomotif):
+		rundata.setGoogle2Maptype("satellite");
+		self.work.refreshPolygonOnGoogleMap( self, rundata )
+
+	def doSelectGM2Maptype3(self, Locomotif):
+		rundata.setGoogle2Maptype("roadmap");
+		self.work.refreshPolygonOnGoogleMap( self, rundata )
+
+	def doSelectGM2Maptype4(self, Locomotif):
+		rundata.setGoogle2Maptype("terrain");
+		self.work.refreshPolygonOnGoogleMap( self, rundata )
 
 	def doCreateMaps(self, Locomotif):
 		"""
 		Slot for button CreateMap
 		"""
 		self.work.workCreateMaps( self, rundata )
-
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
