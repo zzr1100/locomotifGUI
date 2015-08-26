@@ -128,7 +128,7 @@
        <string notr="true">background-color: rgb(240, 240, 240);</string>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="t1FileData">
        <attribute name="title">
@@ -687,11 +687,6 @@ color: rgb(255, 0, 0);</string>
      <zorder>label_3</zorder>
      <zorder>t1LoadedDatasets</zorder>
     </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Data Record 2</string>
-     </attribute>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -809,12 +804,12 @@ background-color: rgb(255, 255, 255);</string>
       </widget>
      </item>
      <item row="6" column="0" colspan="2">
-      <widget class="QPushButton" name="cmdDebug">
+      <widget class="QPushButton" name="cmdNewTab">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 170, 255);</string>
+        <string notr="true">background-color: rgb(220, 220, 220);</string>
        </property>
        <property name="text">
-        <string>DEBUG</string>
+        <string>New Data Tab</string>
        </property>
       </widget>
      </item>
@@ -826,6 +821,12 @@ background-color: rgb(255, 255, 255);</string>
     <size>
      <width>120</width>
      <height>38</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>524287</width>
+     <height>400</height>
     </size>
    </property>
    <property name="autoFillBackground">
@@ -844,34 +845,11 @@ background-color: rgb(255, 255, 255);</string>
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>71</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Data File:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="loadedDataFilename">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QPushButton" name="cmdReadCSV">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>10</y>
        <width>111</width>
        <height>23</height>
       </rect>
@@ -887,7 +865,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>90</y>
+       <y>40</y>
        <width>111</width>
        <height>23</height>
       </rect>
@@ -903,7 +881,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>220</y>
+       <y>130</y>
        <width>111</width>
        <height>23</height>
       </rect>
@@ -915,29 +893,11 @@ background-color: rgb(255, 255, 255);</string>
       <string>Create Maps</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>46</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>9</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Maps</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="cmdMapWidth">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>190</y>
+       <y>100</y>
        <width>31</width>
        <height>20</height>
       </rect>
@@ -947,7 +907,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>190</y>
+       <y>100</y>
        <width>31</width>
        <height>20</height>
       </rect>
@@ -957,7 +917,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
+       <y>70</y>
        <width>111</width>
        <height>23</height>
       </rect>
@@ -973,7 +933,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>50</x>
-       <y>190</y>
+       <y>100</y>
        <width>16</width>
        <height>16</height>
       </rect>
@@ -983,6 +943,56 @@ background-color: rgb(255, 255, 255);</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <zorder>cmdReadCSV</zorder>
+    <zorder>cmdCreateVPolygone</zorder>
+    <zorder>cmdCreateMaps</zorder>
+    <zorder>cmdMapWidth</zorder>
+    <zorder>cmdMapHeight</zorder>
+    <zorder>cmdCreateDPolygone</zorder>
+    <zorder>label_5</zorder>
+    <zorder>t1GMMapHeight</zorder>
+    <zorder>label_10</zorder>
+    <zorder>t1GMmaptype_3</zorder>
+    <zorder>t1GMmaptype</zorder>
+    <zorder>label_9</zorder>
+    <zorder>t1GMmaptype_2</zorder>
+    <zorder>label_11</zorder>
+    <zorder>t1GMmaptype_4</zorder>
+    <zorder>t1GMMapWidth</zorder>
+    <zorder>t1GMMapHeight</zorder>
+    <zorder>t1GMmaptype_3</zorder>
+    <zorder>t1GMmaptype</zorder>
+    <zorder>label_9</zorder>
+    <zorder>t1GMmaptype_2</zorder>
+    <zorder>label_11</zorder>
+    <zorder>t1GMmaptype_4</zorder>
+    <zorder>t1GMMapWidth</zorder>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="QuickTest">
+   <property name="windowTitle">
+    <string>Testfunktionen</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <widget class="QPushButton" name="cmdDebug">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>102</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 170, 255);</string>
+     </property>
+     <property name="text">
+      <string>DEBUG</string>
      </property>
     </widget>
    </widget>
@@ -1086,7 +1096,7 @@ background-color: rgb(255, 255, 255);</string>
     </hint>
     <hint type="destinationlabel">
      <x>49</x>
-     <y>522</y>
+     <y>463</y>
     </hint>
    </hints>
   </connection>
@@ -1267,6 +1277,22 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
+   <sender>cmdDebug</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doDebugToConsole()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>696</x>
+     <y>-6</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>t1GMmaptype</sender>
    <signal>clicked(bool)</signal>
    <receiver>Locomotif</receiver>
@@ -1274,7 +1300,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>196</y>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1290,7 +1316,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>196</x>
-     <y>223</y>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>367</x>
@@ -1306,7 +1332,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>236</y>
+     <y>266</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1322,7 +1348,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>256</y>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1338,7 +1364,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>195</x>
-     <y>198</y>
+     <y>228</y>
     </hint>
     <hint type="destinationlabel">
      <x>307</x>
@@ -1354,7 +1380,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>216</y>
+     <y>246</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1370,7 +1396,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>236</y>
+     <y>266</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1386,7 +1412,7 @@ background-color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>198</x>
-     <y>256</y>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>564</x>
@@ -1395,18 +1421,50 @@ background-color: rgb(255, 255, 255);</string>
    </hints>
   </connection>
   <connection>
-   <sender>cmdDebug</sender>
-   <signal>clicked(bool)</signal>
+   <sender>mainDataDisplay</sender>
+   <signal>currentChanged(int)</signal>
    <receiver>Locomotif</receiver>
-   <slot>doDebugToConsole()</slot>
+   <slot>doMainTabSelect()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>25</x>
-     <y>166</y>
+     <x>619</x>
+     <y>371</y>
     </hint>
     <hint type="destinationlabel">
-     <x>696</x>
-     <y>-6</y>
+     <x>605</x>
+     <y>375</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>mainDataDisplay</sender>
+   <signal>tabCloseRequested(int)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doMainTabClose()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>824</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmdNewTab</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>Locomotif</receiver>
+   <slot>doMainTabAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1027</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>967</x>
+     <y>-5</y>
     </hint>
    </hints>
   </connection>
@@ -1434,5 +1492,8 @@ background-color: rgb(255, 255, 255);</string>
   <slot>doSelectGM2Maptype3()</slot>
   <slot>doSelectGM2Maptype4()</slot>
   <slot>doDebugToConsole()</slot>
+  <slot>doMainTabClose()</slot>
+  <slot>doMainTabSelect()</slot>
+  <slot>doMainTabAdd()</slot>
  </slots>
 </ui>

@@ -5,87 +5,85 @@ Created on Tue Jul 07 06:55:51 2015
 @author: Thomas
 """
 import sys
-from PyQt4 import QtCore, QtGui, QtWebKit;
+from PyQt4 import QtCore, QtGui, QtWebKit
 import locomotif as loc
+from tools.Tools_Locomotif import Tools_Locomotif
 
 class Work_Locomotif(object):
     """
     Docstring
     """
-    def setupWork(self, locapp):
+    def setupWork(self):
 		self.initialized = 1
 		self.lastcreated = 0
-		locapp.ui.t1Data.setCurrentIndex(0)
+		self.tools = Tools_Locomotif()
+		self.tools.setupTools()
 
-    def workCleanTabs(self, locapp, rundata, cleanLevel):
-		""" clean run data and display tabs """
+    def workCleanTabs(self, widgets, rundata, cleanLevel):
+		""" 
+		Clean the data tabs of the currently selected data set
+		"""
 		print "Clean Tabs"
 		if cleanLevel<1:
 			rundata.cleanBuffer()
 			print "Clean Tabs data"
-			#locapp.ui.t1FileData.setDisabled(1)
-			locapp.ui.t1FileDataView.clear()
+			#widgets.t1FileData.setDisabled(1)
+			widgets.t1FileDataView.clear()
 		if cleanLevel<2:
 			print "Clean Tabs csv"
-			#locapp.ui.t1DataFrame.setDisabled(1)
-			locapp.ui.t1DataFrameView.clear()
+			#widgets.t1DataFrame.setDisabled(1)
+			widgets.t1DataFrameView.clear()
 		if cleanLevel<3:
 			print "Clean Tabs poly"
-			#locapp.ui.t1Polygon1.setDisabled(1)
-			locapp.ui.t1Polygon1View.clear()
-			#locapp.ui.t1Polygon2.setDisabled(1)
-			locapp.ui.t1Polygon2View.clear()
+			#widgets.t1Polygon1.setDisabled(1)
+			widgets.t1Polygon1View.clear()
+			#widgets.t1Polygon2.setDisabled(1)
+			widgets.t1Polygon2View.clear()
 			self.lastcreated = 0
 		if cleanLevel<4:
 			print "Clean Tabs map"
 			scene = QtGui.QGraphicsScene();
-			#locapp.ui.t1Map1.setDisabled(1)
-			locapp.ui.t1Map1View.setScene(scene);
-			#locapp.ui.t1Map2.setDisabled(1)
-			locapp.ui.t1Map2View.setScene(scene);
-			#locapp.ui.t1GoogleMaps.setDisabled(1)
+			#widgets.t1Map1.setDisabled(1)
+			widgets.t1Map1View.setScene(scene);
+			#widgets.t1Map2.setDisabled(1)
+			widgets.t1Map2View.setScene(scene);
+			#widgets.t1GoogleMaps.setDisabled(1)
 		
-    def workReadCSV(self, locapp, rundata):
+    def workReadCSV(self, widgets, rundata):
 		"""
 		Get the selected Data File Name and read as CSV
 		"""
-		dataFilename = locapp.ui.t1LoadedDataFilename.text();
+		dataFilename = widgets.t1LoadedDataFilename.text();
 		if dataFilename == "":
-			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
+			self.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
 			return
 		# create data frame
 		df = loc.read_csv( str(dataFilename), mapsta_version=100)
 		rundata.setDF(df)
-		locapp.ui.t1Data.setCurrentIndex(2)
+		widgets.t1Data.setCurrentIndex(2)
 
-    def workCreateCluster(self, locapp, rundata):
+    def workCreateCluster(self, widgets, rundata):
 		"""
 		Create Cluster for the loaded Dataframe
 		"""
 		df = rundata.getDF()
-		#if df == None:
-		#	locapp.tools.showInfo( "Info", "SELECT READ CSV FIRST" )
-		#	return
-		if locapp.ui.t1LoadedDataFilename.text() == "":
-			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
-			return
 		
 		# create locomotif cluster object
 		c = loc.Cluster(df)
 		rundata.setCluster( c )
-		locapp.ui.t1LoadedDatasets.setText(str(c.getDatasets()))
-		locapp.ui.t1Data.setCurrentIndex(2)
+		widgets.t1LoadedDatasets.setText(str(c.getDatasets()))
+		widgets.t1Data.setCurrentIndex(2)
 
-    def workCreateVPolygone(self, locapp, rundata):
+    def workCreateVPolygone(self, widgets, rundata):
 		"""
 		Create Polygone from given cluster
 		"""
 		c = rundata.getCluster()
-		if c == None:
-			locapp.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
-			return
-		if locapp.ui.t1LoadedDataFilename.text() == "":
-			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
+		#if c == None:
+		#	self.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
+		#	return
+		if widgets.t1LoadedDataFilename.text() == "":
+			self.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
 			return
 		# calculate polynoms
 		res11, ref = c.voronoi('biomass')
@@ -93,25 +91,24 @@ class Work_Locomotif(object):
 		res12, ref = c.voronoi('diversity')
 		rundata.setVoronoi2( res12, ref )
 		# display
-		self.putPolygonIntoTable( locapp, res11, locapp.ui.t1Polygon1View, rundata.getDataFont() )
-		self.putPolygonIntoTable( locapp, res12, locapp.ui.t1Polygon2View, rundata.getDataFont() )
+		self.putPolygonIntoTable( res11, widgets.t1Polygon1View, rundata.getDataFont() )
+		self.putPolygonIntoTable( res12, widgets.t1Polygon2View, rundata.getDataFont() )
 		# clean existing maps
-		self.workCleanTabs( locapp, rundata, 3 )
-		locapp.ui.t1Data.setCurrentIndex(3)
+		self.workCleanTabs( widgets, rundata, 3 )
+		widgets.t1Data.setCurrentIndex(3)
 		self.lastcreated = 1
 
-    def workCreateDPolygone(self, locapp, rundata):
+    def workCreateDPolygone(self, widgets, rundata):
 		"""
 		Create Polygone from given cluster
 		"""
 		c = rundata.getCluster()
-		if c == None:
-			locapp.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
+		#if c == None:
+		#	self.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
+		#	return
+		if widgets.t1LoadedDataFilename.text() == "":
+			self.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
 			return
-		if locapp.ui.t1LoadedDataFilename.text() == "":
-			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
-			return
-		
 		
 		# Daten fuer Polygone berechnen
 		res11, ref = c.delaunay('biomass')
@@ -119,46 +116,24 @@ class Work_Locomotif(object):
 		res12, ref = c.delaunay('diversity')
 		rundata.setDelaunay2( res12, ref )
 		# display
-		self.putPolygonIntoTable( locapp, res11, locapp.ui.t1Polygon1View, rundata.getDataFont() )
-		self.putPolygonIntoTable( locapp, res12, locapp.ui.t1Polygon2View, rundata.getDataFont() )
+		self.putPolygonIntoTable( res11, widgets.t1Polygon1View, rundata.getDataFont() )
+		self.putPolygonIntoTable( res12, widgets.t1Polygon2View, rundata.getDataFont() )
 		# clean existing maps
-		self.workCleanTabs( locapp, rundata, 3 )
-		locapp.ui.t1Data.setCurrentIndex(3)
+		self.workCleanTabs( widgets, rundata, 3 )
+		widgets.t1Data.setCurrentIndex(3)
 		self.lastcreated = 2
 
-    def workCreateVMaps(self, locapp, rundata):
-		# new size form input fields
-		mapWidth, okw = locapp.ui.cmdMapWidth.text().toInt(10)
-		mapHeight, okh = locapp.ui.cmdMapHeight.text().toInt(10)
-		rundata.setMapWidth( mapWidth )
-		rundata.setMapHeight( mapHeight )
-		# stored polygons
-		res11 = rundata.getVoronoi1();
-		res12 = rundata.getVoronoi2();
-		locapp.ui.t1Data.setCurrentIndex(6)
-
-    def workCreateDMaps(self, locapp, rundata):
-		# new size form input fields
-		mapWidth, okw = locapp.ui.cmdMapWidth.text().toInt(10)
-		mapHeight, okh = locapp.ui.cmdMapHeight.text().toInt(10)
-		rundata.setMapWidth( mapWidth )
-		rundata.setMapHeight( mapHeight )
-		# stored polygons
-		res11 = rundata.getDelaunay1();
-		res12 = rundata.getDelaunay2();
-		locapp.ui.t1Data.setCurrentIndex(6)
-
-    def workCreateMaps(self, locapp, rundata):
+    def workCreateMaps(self, locapp, widgets, rundata):
 		"""
 		ReCreate the Maps for the loaded Datasets
 		Use sizes from input fields
 		"""
 		# checks
 		#if rundata.getCluster() == None:
-		#	locapp.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
+		#	self.tools.showInfo( "Error", "FIRST YOU HAVE TO READ CSV AND CREATE DATASETS" )
 		#	return
-		if locapp.ui.t1LoadedDataFilename.text() == "":
-			locapp.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
+		if widgets.t1LoadedDataFilename.text() == "":
+			self.tools.showInfo( "Info", "SELECT INPUT FILE FIRST" )
 			return
 		
 		# new size form input fields
@@ -168,7 +143,7 @@ class Work_Locomotif(object):
 		rundata.setMapHeight( mapHeight )
 		# which polygons have been created
 		if self.lastcreated == 0: 
-				locapp.tools.showInfo( "Error", "FIRST YOU HAVE TO CALCULATE POLYNOMS" )
+				self.tools.showInfo( "Error", "FIRST YOU HAVE TO CALCULATE POLYNOMS" )
 				return
 		if self.lastcreated == 1: 
 			# stored filenames
@@ -179,8 +154,8 @@ class Work_Locomotif(object):
 			res12org = rundata.getVoronoi2();
 			# switch the point values, seems that the mapper
 			# request points as (lon,lat) and not (lat,lon)
-			# res11 = locapp.tools.modifyPolygonValues(res11org)
-			# res12 = locapp.tools.modifyPolygonValues(res12org)
+			# res11 = self.tools.modifyPolygonValues(res11org)
+			# res12 = self.tools.modifyPolygonValues(res12org)
 			res11 = res11org
 			res12 = res12org
 			# create new maps for current cluster
@@ -201,13 +176,13 @@ class Work_Locomotif(object):
 		# Show Maps
 		scene1 = QtGui.QGraphicsScene();
 		scene1.addPixmap( QtGui.QPixmap(map1Filename) )
-		locapp.ui.t1Map1View.setScene(scene1);
+		widgets.t1Map1View.setScene(scene1);
 		scene2 = QtGui.QGraphicsScene();
 		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
-		locapp.ui.t1Map2View.setScene(scene2);
-		locapp.ui.t1Data.setCurrentIndex(6)
+		widgets.t1Map2View.setScene(scene2);
+		widgets.t1Data.setCurrentIndex(6)
 		
-    def readDataFileIntoTable(self, locapp, filePathAndName ):
+    def readDataFileIntoTable(self, widgets, filePathAndName ):
 		""" 
 		Function to display textfile in table 
 		"""
@@ -215,15 +190,15 @@ class Work_Locomotif(object):
 		fhdl.open(QtCore.QIODevice.ReadWrite)
 		istream = QtCore.QTextStream(fhdl)
 		# clear table 
-		locapp.ui.t1FileDataView.clear()
-		initRowCount = locapp.ui.t1FileDataView.rowCount()
+		widgets.t1FileDataView.clear()
+		initRowCount = widgets.t1FileDataView.rowCount()
 		# read headert line with table names
 		line = istream.readLine()
 		fields = line.split(';')
 		numofcols = fields.count()
-		locapp.ui.t1FileDataView.setHorizontalHeaderLabels( fields )
-		locapp.ui.t1FileDataView.setColumnWidth(0,140)
-		locapp.ui.t1FileDataView.setColumnWidth(1,140)
+		widgets.t1FileDataView.setHorizontalHeaderLabels( fields )
+		widgets.t1FileDataView.setColumnWidth(0,140)
+		widgets.t1FileDataView.setColumnWidth(1,140)
 		# read data lines
 		rowIndex = 0
 		while (not istream.atEnd()):
@@ -231,28 +206,28 @@ class Work_Locomotif(object):
 			values = line.split(';')
 			numofcols = values.count()
 			if rowIndex>=initRowCount:
-				locapp.ui.t1FileDataView.insertRow(rowIndex)
-			locapp.ui.t1FileDataView.setRowHeight(rowIndex,22)
+				widgets.t1FileDataView.insertRow(rowIndex)
+			widgets.t1FileDataView.setRowHeight(rowIndex,22)
 			colIndex = 0
 			for value in values:
 				item = QtGui.QTableWidgetItem()
 				item.setText( str(value) )
-				locapp.ui.t1FileDataView.setItem( rowIndex, colIndex, item )
+				widgets.t1FileDataView.setItem( rowIndex, colIndex, item )
 				# print "Zelle " + str(colIndex) + " / "+ str(rowIndex)+" = " + value
 				colIndex = colIndex+1
 			rowIndex = rowIndex+ 1
 		fhdl.close()
 
-    def markDataOnGoogleMap(self, locapp, rundata):
+    def markDataOnGoogleMap(self, widgets, rundata):
 		""" display google map with data points marked """
 		# new size form input fields
-		mapWidth, okw = locapp.ui.t1GMMapWidth.text().toInt(10)
-		mapHeight, okh = locapp.ui.t1GMMapHeight.text().toInt(10)
+		mapWidth, okw = widgets.t1GMMapWidth.text().toInt(10)
+		mapHeight, okh = widgets.t1GMMapHeight.text().toInt(10)
 		rundata.setGoogleMapWidth( mapWidth )
 		rundata.setGoogleMapHeight( mapHeight )
 		# prepare GOOGLE MAPS url
-		maphint = locapp.ui.t1GoogleMapsHint
-		map = locapp.ui.t1GoogleMapsView
+		maphint = widgets.t1GoogleMapsHint
+		map = widgets.t1GoogleMapsView
 		url = "http://maps.google.com/maps/api/staticmap?sensor=false&language=de"
 		url = url + "&size="+str(mapWidth)+"x"+str(mapHeight)
 		url = url + "&maptype=" + rundata.getGoogle1Maptype()
@@ -282,45 +257,44 @@ class Work_Locomotif(object):
 		if nump < numl:
 			maphint.setText("ATTENTION: Big data, not all points may be displayed at the same time")
 
-    def putCSVIntoTable(self, locapp, df ):
+    def putCSVIntoTable(self, widgets, df ):
 		""" Function display CSV in table """
 		# clear table 
-		locapp.ui.t1DataFrameView.clear()
-		initRowCount = locapp.ui.t1DataFrameView.rowCount()
+		widgets.t1DataFrameView.clear()
+		initRowCount = widgets.t1DataFrameView.rowCount()
 		# set table header
 		colIndex = 0
 		for col in df.columns:
 			item = QtGui.QTableWidgetItem()
 			item.setText( str(col) )
-			locapp.ui.t1DataFrameView.setHorizontalHeaderItem( colIndex, item )
+			widgets.t1DataFrameView.setHorizontalHeaderItem( colIndex, item )
 			colIndex = colIndex+1
-		locapp.ui.t1DataFrameView.setColumnWidth(2,260)
+		widgets.t1DataFrameView.setColumnWidth(2,260)
 		# display data lines
 		rowIndex = 0
 		for value in df.values:
 			if rowIndex>=initRowCount:
-				locapp.ui.t1DataFrameView.insertRow(rowIndex)
-			locapp.ui.t1DataFrameView.setRowHeight(rowIndex,22)
+				widgets.t1DataFrameView.insertRow(rowIndex)
+			widgets.t1DataFrameView.setRowHeight(rowIndex,22)
 			colIndex = 0
 			# df object has always 3 columns
 			item = QtGui.QTableWidgetItem()
 			item.setText( str(value[0]) )
-			locapp.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			widgets.t1DataFrameView.setItem( rowIndex, colIndex, item )
 			colIndex = colIndex+1
 			item = QtGui.QTableWidgetItem()
 			item.setText( str(value[1]) )
-			locapp.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			widgets.t1DataFrameView.setItem( rowIndex, colIndex, item )
 			colIndex = colIndex+1
 			item = QtGui.QTableWidgetItem()
 			item.setText( str(value[2]) )
-			locapp.ui.t1DataFrameView.setItem( rowIndex, colIndex, item )
+			widgets.t1DataFrameView.setItem( rowIndex, colIndex, item )
 			rowIndex = rowIndex+ 1
 
-    def putPolygonIntoTable(self, locapp, pres, uiTable, font ):
+    def putPolygonIntoTable(self, pres, uiTable, font ):
 		""" Function display Polygone in table """
 		# clear table 
 		uiTable.clear()
-
 		# set table header
 		item = QtGui.QTableWidgetItem()
 		item.setText( "Geometry" )
@@ -357,16 +331,16 @@ class Work_Locomotif(object):
 			uiTable.setItem( rowIndex, colIndex, item )
 			rowIndex = rowIndex+ 1
 
-    def markPolygonOnGoogleMap(self, locapp, rundata, pres):
+    def markPolygonOnGoogleMap(self, widgets, rundata, pres):
 		""" display google map with data points marked """
 		# new size form input fields
-		mapWidth, okw = locapp.ui.t1GM2MapWidth.text().toInt(10)
-		mapHeight, okh = locapp.ui.t1GM2MapHeight.text().toInt(10)
+		mapWidth, okw = widgets.t1GM2MapWidth.text().toInt(10)
+		mapHeight, okh = widgets.t1GM2MapHeight.text().toInt(10)
 		rundata.setGoogleMapWidth( mapWidth )
 		rundata.setGoogleMapHeight( mapHeight )
 		# prepare GOOGLE MAPS url
-		maphint = locapp.ui.t1GoogleMaps2Hint
-		map = locapp.ui.t1GoogleMaps2View
+		maphint = widgets.t1GoogleMaps2Hint
+		map = widgets.t1GoogleMaps2View
 		url = "http://maps.google.com/maps/api/staticmap?sensor=false&language=de"
 		url = url + "&size="+str(mapWidth)+"x"+str(mapHeight)
 		url = url + "&maptype=" + rundata.getGoogle2Maptype()
@@ -408,7 +382,7 @@ class Work_Locomotif(object):
 			#	urlpart = urlpart + '|' + str(latval) + "," + str(lonval)
 			
 			# 3 variante mit codierten paths
-			encodedPath = locapp.tools.encodeGoogleMapsPath(line)
+			encodedPath = self.tools.encodeGoogleMapsPath(line)
 			urlpart = "path=enc:" + encodedPath
 			
 			# total path length must be < 2048
@@ -430,11 +404,11 @@ class Work_Locomotif(object):
 		else:
 			maphint.setText("")
 
-    def refreshPolygonOnGoogleMap(self, locapp, rundata ):
+    def refreshPolygonOnGoogleMap(self, widgets, rundata ):
 		if self.lastcreated==1:
-			self.markPolygonOnGoogleMap( locapp, rundata, rundata.getVoronoi1() )
+			self.markPolygonOnGoogleMap( widgets, rundata, rundata.getVoronoi1() )
 			return
 		if self.lastcreated==2:
-			self.markPolygonOnGoogleMap( locapp, rundata, rundata.getDelaunay1() )
+			self.markPolygonOnGoogleMap( widgets, rundata, rundata.getDelaunay1() )
 			return
 	

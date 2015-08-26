@@ -6,7 +6,7 @@ Created on Tue Jul 07 06:55:51 2015
 """
 import sys
 import os
-from PyQt4 import QtCore;
+from PyQt4 import QtCore, QtGui;
 
 class Config_Configuration(object):
 	"""
@@ -21,8 +21,12 @@ class Config_Configuration(object):
 		self.googleMapHeight = 550
 		self.google1Maptype = "hybrid"
 		self.google2Maptype = "hybrid"
+		self.dataFont = None
 
 	def debugConfig(self):
+		print "-------------------------------------"
+		print "Global Configuration Data"
+		print "-------------------------------------"
 		print "DataPath = " + self.dataPath
 		print "MapPath = " + self.mapPath
 		print "MapWidth = " + str(self.mapWidth)
@@ -46,7 +50,12 @@ class Config_Configuration(object):
 		self.googleMapHeight = 550
 		self.google1Maptype = "hybrid"
 		self.google2Maptype = "hybrid"
+		self.dataFont = QtGui.QFont()
+		self.dataFont.setStyleHint(QtGui.QFont.Courier)
 
+	def getDataFont( self ):
+		return self.dataFont
+		
 	def setDataPath( self, path ):
 		self.dataPath = path
 

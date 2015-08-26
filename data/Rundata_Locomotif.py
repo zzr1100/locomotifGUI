@@ -37,6 +37,9 @@ class Rundata_Locomotif(object):
 		self.google2maptype = "hybrid"
 
 	def debugRundata(self):
+		print "-----------------------------------"
+		print "Rundata = " + str(self)
+		print "-----------------------------------"
 		print "DataFilename = " + self.datafilename
 		print "GPSFilename = " + self.gpsfilename
 		print "ProjectFilename = " + self.projectfilename
@@ -218,5 +221,65 @@ class Rundata_Locomotif(object):
 	def getGoogle2Maptype( self ):
 		return self.google2maptype
 
+	def set_g_rundata( self ):
+		"""
+		Copy content from given rundata into g_rundata
+		"""
+		g_rundata.datafilename  = self.datafilename
+		g_rundata.gpsfilename = self.gpsfilename
+		g_rundata.projectfilename = self.projectfilename
+		g_rundata.df = self.df
+		g_rundata.cluster = self.cluster
+		g_rundata.voronoi1values = self.voronoi1values
+		g_rundata.voronoi1ref = self.voronoi1ref
+		g_rundata.voronoi2values = self.voronoi2values
+		g_rundata.voronoi2ref = self.voronoi2ref
+		g_rundata.delaunay1values = self.delaunay1values
+		g_rundata.delaunay1ref = self.delaunay1ref
+		g_rundata.delaunay2values = self.delaunay2values
+		g_rundata.delaunay2ref = self.delaunay2ref
+		g_rundata.mapwidth = self.mapwidth
+		g_rundata.mapheight = self.mapheight
+		g_rundata.mapv1filename = self.mapv1filename
+		g_rundata.mapv2filename = self.mapv2filename
+		g_rundata.mapd1filename = self.mapd1filename
+		g_rundata.mapd2filename = self.mapd2filename
+		g_rundata.googlemapwidth = self.googlemapwidth
+		g_rundata.googlemapheight = self.googlemapheight
+		g_rundata.google1maptype = self.google1maptype
+		g_rundata.google2maptype = self.google2maptype
+
+	def get_g_rundata( self ):
+		"""
+		Copy content from g_rundata into rundata instance
+		"""
+		self.datafilename = g_rundata.datafilename
+		self.gpsfilename = g_rundata.gpsfilename
+		self.projectfilename = g_rundata.projectfilename
+		self.df = g_rundata.df
+		self.cluster = g_rundata.cluster
+		self.voronoi1values = g_rundata.voronoi1values
+		self.voronoi1ref = g_rundata.voronoi1ref
+		self.voronoi2values = g_rundata.voronoi2values
+		self.voronoi2ref = g_rundata.voronoi2ref
+		self.delaunay1values = g_rundata.delaunay1values
+		self.delaunay1ref = g_rundata.delaunay1ref
+		self.delaunay2values = g_rundata.delaunay2values
+		self.delaunay2ref = g_rundata.delaunay2ref
+		self.mapwidth = g_rundata.mapwidth
+		self.mapheight = g_rundata.mapheight
+		self.mapv1filename = g_rundata.mapv1filename
+		self.mapv2filename = g_rundata.mapv2filename
+		self.mapd1filename = g_rundata.mapd1filename
+		self.mapd2filename = g_rundata.mapd2filename
+		self.googlemapwidth = g_rundata.googlemapwidth
+		self.googlemapheight = g_rundata.googlemapheight
+		self.google1maptype = g_rundata.google1maptype
+		self.google2maptype = g_rundata.google2maptype
 		
+# Global Rundata buffer to be used throughout the application
+# The data from the selected tab is moved to this buffer
+# "This buffer points to the selected data"
 		
+g_rundata = Rundata_Locomotif()
+

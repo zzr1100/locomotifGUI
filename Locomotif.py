@@ -10,13 +10,17 @@ from PyQt4 import QtGui, QtCore
 from ui.Ui_Locomotif import Ui_Locomotif
 from tools.Tools_Locomotif import Tools_Locomotif
 from work.Work_Locomotif import Work_Locomotif
-from data.Rundata_Locomotif import Rundata_Locomotif
 from config.Config_Configuration import *
 from ConfigDialog import ConfigDialog
+from data.Rundata_Locomotif import Rundata_Locomotif
+from data.Rundata_Locomotif import g_rundata
+from data.Rundata_Widgets import g_tabwidgets
+from uicustom.UiTools import *
 import locomotif as loc
 
 # globaler Datenspeicher
-rundata = Rundata_Locomotif()
+uiTools = UiTools()
+selectedRundata = None
 
 class Locomotif(QtGui.QMainWindow):
 	"""
@@ -32,57 +36,58 @@ class Locomotif(QtGui.QMainWindow):
 		# load the ui
 		self.ui = Ui_Locomotif()
 		self.ui.setupUi(self)
-
+		
 		# setup global config
 		configData.setupConfig()
 
 		# load tools
 		self.tools = Tools_Locomotif()
 		self.tools.setupTools()
-		# setup global rundata
-		rundata.setupRundata()
 		# load work
 		self.work = Work_Locomotif()
-		self.work.setupWork(self)
+		self.work.setupWork()
         
-		# create font for data display
-		dataFont = QtGui.QFont()
-		dataFont.setStyleHint(QtGui.QFont.Courier)
-		rundata.setDataFont( dataFont )
-		
-		# more initialisations
-		self.ui.mainDataDisplay.setTabText(0,"Data Record 1")
-		self.ui.mainDataDisplay.setTabText(1,"Data Record 2")
-		self.ui.mainDataDisplay.setCurrentIndex(0)
-		
-		# load configuration values and stor in config class
+		# load configuration values and store in config class
 		__base__ = os.path.abspath(os.path.dirname(__file__))
 		configData.initConfig( __base__ )
 		configData.debugConfig()
 
-		# initial values for maps
+		# setup global rundata buffer (not sure whetter this is required any longer)
+		g_rundata.setupRundata()
+		g_rundata.setDataFont( configData.getDataFont() )
+		
+		# initial values for maps in the working dock widget
 		mapWidth = configData.getMapWidth()
-		rundata.setMapWidth( mapWidth )
+		g_rundata.setMapWidth( mapWidth )
 		self.ui.cmdMapWidth.setText(str(mapWidth))
 		mapHeight = configData.getMapHeight()
-		rundata.setMapHeight( mapHeight )
+		g_rundata.setMapHeight( mapHeight )
 		self.ui.cmdMapHeight.setText(str(mapHeight))
 
-		# initial values for google maps
+		# setup/select the main data display
+		mainDataWidget = self.ui.mainDataDisplay
+		# delete the first tab page that is created by the code
+		# from the QT-Designer
+		mainDataWidget.removeTab(0)
+
+		# setup customized main tab page
+		uiTools.setupUiTools(self)
+		uiTools.initCustomTabWidget(self.ui.mainDataDisplay, 0 )
+		# and now add the first custom tab page
+		uiTools.addCustomTabPage()
+		uiTools.selectCustomTabPage(0)
+		
+		# initial values for google maps in custom tab page
 		mapWidth = configData.getGoogleMapWidth()
-		rundata.setGoogleMapWidth( mapWidth )
-		self.ui.t1GMMapWidth.setText(str(mapWidth))
-		self.ui.t1GM2MapWidth.setText(str(mapWidth))
+		g_rundata.setGoogleMapWidth( mapWidth )
+		#g_tabwidgets.t1GMMapWidth.setText(str(mapWidth))
+		#g_tabwidgets.t1GM2MapWidth.setText(str(mapWidth))
 		mapHeight = configData.getGoogleMapHeight()
-		rundata.setGoogleMapHeight( mapHeight )
-		self.ui.t1GMMapHeight.setText(str(mapWidth))
-		self.ui.t1GM2MapHeight.setText(str(mapWidth))
+		g_rundata.setGoogleMapHeight( mapHeight )
+		#g_tabwidgets.t1GMMapHeight.setText(str(mapWidth))
+		#g_tabwidgets.t1GM2MapHeight.setText(str(mapWidth))
 		
 # These are custom slots used within Qt Designer
-
-	def doDebugToConsole(self, Locomotif):
-		configData.debugConfig()
-		rundata.debugRundata()
 
 	def doConfigDialog(self, Locomotif):
 		print "open configuration dialog"
@@ -92,46 +97,45 @@ class Locomotif(QtGui.QMainWindow):
 		
 		# transfer (new) map sizes
 		mapWidth = configData.getMapWidth()
-		rundata.setMapWidth( mapWidth )
+		g_rundata.setMapWidth( mapWidth )
 		self.ui.cmdMapWidth.setText(str(mapWidth))
 		mapHeight = configData.getMapHeight()
-		rundata.setMapHeight( mapHeight )
+		g_rundata.setMapHeight( mapHeight )
 		self.ui.cmdMapHeight.setText(str(mapHeight))
 		
 		# transfer (new) google maps settings
 		mapWidth = configData.getGoogleMapWidth()
-		rundata.setGoogleMapWidth( mapWidth )
-		self.ui.t1GMMapWidth.setText(str(mapWidth))
-		self.ui.t1GM2MapWidth.setText(str(mapWidth))
+		g_rundata.setGoogleMapWidth( mapWidth )
+		g_tabwidgets.t1GMMapWidth.setText(str(mapWidth))
+		g_tabwidgets.t1GM2MapWidth.setText(str(mapWidth))
 		mapHeight = configData.getGoogleMapHeight()
-		rundata.setGoogleMapHeight( mapHeight )
-		self.ui.t1GMMapHeight.setText(str(mapHeight))
-		self.ui.t1GM2MapHeight.setText(str(mapHeight))
+		g_rundata.setGoogleMapHeight( mapHeight )
+		g_tabwidgets.t1GMMapHeight.setText(str(mapHeight))
+		g_tabwidgets.t1GM2MapHeight.setText(str(mapHeight))
 		
 		maptype = configData.getGoogle1Maptype()
-		rundata.setGoogle1Maptype( maptype )
-		# followinfg values must fit to combobox in configuration
+		g_rundata.setGoogle1Maptype( maptype )
+		# following values must fit to combobox in configuration
 		if maptype == "hybrid":
-			self.ui.t1GMmaptype.setChecked(True)
+			g_tabwidgets.t1GMmaptype.setChecked(True)
 		if maptype == "satellite":
-			self.ui.t1GMmaptype_2.setChecked(True)
+			g_tabwidgets.t1GMmaptype_2.setChecked(True)
 		if maptype == "roadmap":
-			self.ui.t1GMmaptype_3.setChecked(True)
+			g_tabwidgets.t1GMmaptype_3.setChecked(True)
 		if maptype == "terrain":
-			self.ui.t1GMmaptype_4.setChecked(True)
+			g_tabwidgets.t1GMmaptype_4.setChecked(True)
 		
 		maptype = configData.getGoogle2Maptype()
-		rundata.setGoogle2Maptype( maptype )
-		self.ui.t1GM2maptype_2.setChecked(True)
-		# followinfg values must fit to combobox in configuration
+		g_rundata.setGoogle2Maptype( maptype )
+		# following values must fit to combobox in configuration
 		if maptype == "hybrid":
-			self.ui.t1GM2maptype.setChecked(True)
+			g_tabwidgets.t1GM2maptype.setChecked(True)
 		if maptype == "satellite":
-			self.ui.t1GM2maptype_2.setChecked(True)
+			g_tabwidgets.t1GM2maptype_2.setChecked(True)
 		if maptype == "roadmap":
-			self.ui.t1GM2maptype_3.setChecked(True)
+			g_tabwidgets.t1GM2maptype_3.setChecked(True)
 		if maptype == "terrain":
-			self.ui.t1GM2maptype_4.setChecked(True)
+			g_tabwidgets.t1GM2maptype_4.setChecked(True)
 		
 	def openDataFile(self, Locomotif):
 		""" Load a Data File for Further Processing """
@@ -141,30 +145,44 @@ class Locomotif(QtGui.QMainWindow):
 			return 0
 		
 		# deactivate all tabs 
-		self.work.workCleanTabs( self, rundata, 0 )
-		self.ui.t1Data.setCurrentIndex(0)
+		self.work.workCleanTabs( g_tabwidgets, g_rundata, 0 )
+		g_tabwidgets.t1Data.setCurrentIndex(0)
 		
-		# store nme in global data	
-		rundata.setDataFileName( dataFilename )
-		self.ui.loadedDataFilename.setText(dataFilename)
-		self.ui.t1LoadedDataFilename.setText(dataFilename)
+		# store name in global data	
+		g_rundata.setDataFileName( dataFilename )
+		# set data into current tab
+		g_tabwidgets.t1LoadedDataFilename.setText(dataFilename)
 		# load and display initial data
-		self.work.readDataFileIntoTable( self, dataFilename )
-		self.work.markDataOnGoogleMap( self, rundata )
-		print "data marked on google map type " + rundata.getGoogle1Maptype()
+		self.work.readDataFileIntoTable( g_tabwidgets, dataFilename )
+		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
+		print "data marked on google map type " + g_rundata.getGoogle1Maptype()
 		
 		# initial names for maps
 		mapv1Filename = configData.getMapPath() + "/map1_v.png"
 		mapv2Filename = configData.getMapPath() + "/map2_v.png"
-		rundata.setV1Mapname( mapv1Filename )
-		rundata.setV2Mapname( mapv2Filename )
+		g_rundata.setV1Mapname( mapv1Filename )
+		g_rundata.setV2Mapname( mapv2Filename )
 		mapd1Filename = configData.getMapPath() + "/map1_d.png"
 		mapd2Filename = configData.getMapPath() + "/map2_d.png"
-		rundata.setD1Mapname( mapd1Filename )
-		rundata.setD2Mapname( mapd2Filename )
+		g_rundata.setD1Mapname( mapd1Filename )
+		g_rundata.setD2Mapname( mapd2Filename )
 		
 		return 1
 		
+	def doMainTabAdd(self, Locomotif ):
+		uiTools.addCustomTabPage()
+
+	def doMainTabSelect(self, currentIndex):
+		print "maintabselect " + str(currentIndex)
+		if currentIndex<0:
+			return
+		print "do maintabselect " + str(currentIndex)
+		uiTools.selectCustomTabPage(currentIndex)
+
+	def doMainTabClose(self, currentIndex):
+		print "maintabclose " + str(currentIndex)
+		uiTools.removeCustomTabPage(currentIndex)
+
 	def openGPSFile(self, Locomotif):
 		""" Load a GPS File for Further Processing """
 		gpsFileName = self.tools.selectGPSFile()
@@ -174,68 +192,75 @@ class Locomotif(QtGui.QMainWindow):
 		projectFileName = self.tools.selectProjectFile()
 
 	def doSelectGMMaptype1(self, Locomotif):
-		rundata.setGoogle1Maptype("hybrid");
-		self.work.markDataOnGoogleMap( self, rundata )
+		g_rundata.setGoogle1Maptype("hybrid");
+		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype2(self, Locomotif):
-		rundata.setGoogle1Maptype("satellite");
-		self.work.markDataOnGoogleMap( self, rundata )
+		g_rundata.setGoogle1Maptype("satellite");
+		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype3(self, Locomotif):
-		rundata.setGoogle1Maptype("roadmap");
-		self.work.markDataOnGoogleMap( self, rundata )
+		g_rundata.setGoogle1Maptype("roadmap");
+		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype4(self, Locomotif):
-		rundata.setGoogle1Maptype("terrain");
-		self.work.markDataOnGoogleMap( self, rundata )
+		g_rundata.setGoogle1Maptype("terrain");
+		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doReadCSV(self, Locomotif):
 		"""
 		Reload the CSV DataFrames with the given name
 		"""
-		self.work.workReadCSV( self, rundata )
-		df = rundata.getDF()
-		self.work.putCSVIntoTable( self, df )
+		self.work.workReadCSV( g_tabwidgets, g_rundata )
+		df = g_rundata.getDF()
+		self.work.putCSVIntoTable( g_tabwidgets, df )
 		"""
 		Create Cluster for the loaded Dataframe
 		"""
-		self.work.workCreateCluster( self, rundata )
+		self.work.workCreateCluster( g_tabwidgets, g_rundata )
 
 	def doCreateVPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
-		self.work.workCreateVPolygone(self, rundata )
-		self.work.markPolygonOnGoogleMap(self, rundata, rundata.getVoronoi1() )
+		print "CREATE POLYNOME"
+		self.work.workCreateVPolygone(g_tabwidgets, g_rundata )
+		print "CREATE MAP"
+		self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getVoronoi1() )
 
 	def doCreateDPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
-		self.work.workCreateDPolygone(self, rundata )
-		self.work.markPolygonOnGoogleMap(self, rundata, rundata.getDelaunay1() )
+		self.work.workCreateDPolygone(g_tabwidgets, g_rundata )
+		self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getDelaunay1() )
 
 	def doSelectGM2Maptype1(self, Locomotif):
-		rundata.setGoogle2Maptype("hybrid");
-		self.work.refreshPolygonOnGoogleMap( self, rundata )
+		g_rundata.setGoogle2Maptype("hybrid");
+		self.work.refreshPolygonOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGM2Maptype2(self, Locomotif):
-		rundata.setGoogle2Maptype("satellite");
-		self.work.refreshPolygonOnGoogleMap( self, rundata )
+		g_rundata.setGoogle2Maptype("satellite");
+		self.work.refreshPolygonOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGM2Maptype3(self, Locomotif):
-		rundata.setGoogle2Maptype("roadmap");
-		self.work.refreshPolygonOnGoogleMap( self, rundata )
+		g_rundata.setGoogle2Maptype("roadmap");
+		self.work.refreshPolygonOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGM2Maptype4(self, Locomotif):
-		rundata.setGoogle2Maptype("terrain");
-		self.work.refreshPolygonOnGoogleMap( self, rundata )
+		g_rundata.setGoogle2Maptype("terrain");
+		self.work.refreshPolygonOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doCreateMaps(self, Locomotif):
 		"""
 		Slot for button CreateMap
 		"""
-		self.work.workCreateMaps( self, rundata )
+		self.work.workCreateMaps( self, g_tabwidgets, g_rundata )
+
+	def doDebugToConsole(self, Locomotif):
+		configData.debugConfig()
+		g_rundata.debugRundata()
+		uiTools.debugUiTools()
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
