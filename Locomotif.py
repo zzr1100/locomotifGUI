@@ -259,7 +259,7 @@ class Locomotif(QtGui.QMainWindow):
 
 	def doDebugToConsole(self, Locomotif):
 		configData.debugConfig()
-		g_rundata.debugRundata()
+		g_rundata.debugRundata("g_rundata")
 		uiTools.debugUiTools()
 
 if __name__ == "__main__":

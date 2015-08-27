@@ -36,9 +36,9 @@ class Rundata_Locomotif(object):
 		self.google1maptype = "hybrid"
 		self.google2maptype = "hybrid"
 
-	def debugRundata(self):
+	def debugRundata(self, title):
 		print "-----------------------------------"
-		print "Rundata = " + str(self)
+		print title + " = " + str(self)
 		print "-----------------------------------"
 		print "DataFilename = " + self.datafilename
 		print "GPSFilename = " + self.gpsfilename

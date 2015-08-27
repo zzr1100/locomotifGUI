@@ -45,7 +45,7 @@ class UiTools(object):
 		print "selectedCustomTab = " + str(self.selectedCustomTab)
 		self.selectedCustomTab.debugTabElement()
 		print "selectedRundata = " + str(self.selectedRundata)
-		self.selectedRundata.debugRundata()
+		self.selectedRundata.debugRundata("selectedRundata")
 		print "---------------------------------"
 		print "list of "+str(len(self.tabList))+"custom tab elements = " + str(self.tabList)
 		for tabElem in self.tabList:
@@ -90,6 +90,15 @@ class UiTools(object):
 		self.numTabs = self.numTabs + 1
 		self.lastTabIndex = self.numTabs -1		
 		self.nextinternalnum = self.nextinternalnum + 1
+		# insert some start values into the rundata of the new tab
+		mapWidth = configData.getGoogleMapWidth()
+		newTabElem.rundata.setGoogleMapWidth( mapWidth )
+		mapHeight = configData.getGoogleMapHeight()
+		newTabElem.rundata.setGoogleMapHeight( mapHeight )
+		maptype = configData.getGoogle1Maptype()
+		newTabElem.rundata.setGoogle1Maptype( maptype )
+		maptype = configData.getGoogle2Maptype()
+		newTabElem.rundata.setGoogle2Maptype( maptype )
 
 	def selectCustomTabPage(self, selectedIndex ):
 		print "switch to custom tab page"
@@ -107,35 +116,42 @@ class UiTools(object):
 		self.selectedCustomTab.getWidgetBuffer().set_g_tabwidgets()
 		# set this rundata as the global rundata to work on it now
 		self.selectedRundata.set_g_rundata()
+		
 		# insert some start values into the widgets
-		mapWidth = configData.getGoogleMapWidth()
-		g_rundata.setGoogleMapWidth( mapWidth )
+		mapWidth = g_rundata.getGoogleMapWidth()
 		g_tabwidgets.t1GMMapWidth.setText(str(mapWidth))
 		g_tabwidgets.t1GM2MapWidth.setText(str(mapWidth))
-		mapHeight = configData.getGoogleMapHeight()
-		g_rundata.setGoogleMapHeight( mapHeight )
+		mapHeight = g_rundata.getGoogleMapHeight()
 		g_tabwidgets.t1GMMapHeight.setText(str(mapHeight))
 		g_tabwidgets.t1GM2MapHeight.setText(str(mapHeight))
-		maptype = configData.getGoogle1Maptype()
-		g_rundata.setGoogle1Maptype( maptype )
+		maptype = g_rundata.getGoogle1Maptype()
+		print "google map type 1 = " + maptype
 		if maptype == "hybrid":
 			g_tabwidgets.t1GMmaptype.setChecked(True)
+			print "set button hybrid"
 		if maptype == "satellite":
 			g_tabwidgets.t1GMmaptype_2.setChecked(True)
+			print "set button satellite"
 		if maptype == "roadmap":
 			g_tabwidgets.t1GMmaptype_3.setChecked(True)
+			print "set button roadmap"
 		if maptype == "terrain":
 			g_tabwidgets.t1GMmaptype_4.setChecked(True)
-		maptype = configData.getGoogle2Maptype()
-		g_rundata.setGoogle2Maptype( maptype )
+			print "set button terrain"
+		maptype = g_rundata.getGoogle2Maptype()
+		print "google map type 2 = " + maptype
 		if maptype == "hybrid":
 			g_tabwidgets.t1GM2maptype.setChecked(True)
+			print "set button hybrid"
 		if maptype == "satellite":
 			g_tabwidgets.t1GM2maptype_2.setChecked(True)
+			print "set button satellite"
 		if maptype == "roadmap":
 			g_tabwidgets.t1GM2maptype_3.setChecked(True)
+			print "set button roadmap"
 		if maptype == "terrain":
 			g_tabwidgets.t1GM2maptype_4.setChecked(True)
+			print "set button terrain"
 
 	def removeCustomTabPage(self, selectedIndex ):
 		if self.numTabs<=1:
@@ -166,14 +182,14 @@ class UiCustomTab(object):
 		# set title to the new tab widget
 		
 		# set slots and signals
-		#QtCore.QObject.connect(self.t1GMmaptype, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype1)
-		#QtCore.QObject.connect(self.t1GMmaptype_2, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype2)
-		#QtCore.QObject.connect(self.t1GMmaptype_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype3)
-		#QtCore.QObject.connect(self.t1GMmaptype_4, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype4)
-		#QtCore.QObject.connect(self.t1GM2maptype, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype1)
-		#QtCore.QObject.connect(self.t1GM2maptype_2, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype2)
-		#QtCore.QObject.connect(self.t1GM2maptype_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype3)
-		#QtCore.QObject.connect(self.t1GM2maptype_4, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype4)
+		QtCore.QObject.connect(self.widgets.t1GMmaptype, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype1)
+		QtCore.QObject.connect(self.widgets.t1GMmaptype_2, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype2)
+		QtCore.QObject.connect(self.widgets.t1GMmaptype_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype3)
+		QtCore.QObject.connect(self.widgets.t1GMmaptype_4, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGMMaptype4)
+		QtCore.QObject.connect(self.widgets.t1GM2maptype, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype1)
+		QtCore.QObject.connect(self.widgets.t1GM2maptype_2, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype2)
+		QtCore.QObject.connect(self.widgets.t1GM2maptype_3, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype3)
+		QtCore.QObject.connect(self.widgets.t1GM2maptype_4, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), locapp.doSelectGM2Maptype4)
 		# store the tab widget
 
 		# create an application data buffer for this tab element
@@ -193,12 +209,9 @@ class UiCustomTab(object):
 		
 	def debugTabElement(self):
 		print "self.internalnum = " + str(self.internalnum)
-		print "self.tabElement = " + str(self.tabElement)
-		print "self.t1LoadedDataFilename = " + str(self.t1LoadedDataFilename)
-		print "self.t1LoadedDatasets = " + str(self.t1LoadedDatasets)
-		print "self.t1DataFrame = " + str(self.t1DataFrame)
-		print "self.t1DataFrameView = " + str(self.t1DataFrameView)
+		print "self.widgets = " + str(self.widgets)
 		print "self.rundata = " + str(self.rundata)
+		self.rundata.debugRundata( "rundata"+str(self.internalnum) )
 
 	def setInternalnum(self, internalnum):
 		self.internalnum = internalnum
