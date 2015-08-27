@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/Ui_Locomotif.ui'
 #
-# Created: Wed Aug 26 13:22:32 2015
+# Created: Thu Aug 27 14:58:45 2015
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_Locomotif(object):
     def setupUi(self, Locomotif):
         Locomotif.setObjectName(_fromUtf8("Locomotif"))
-        Locomotif.resize(1211, 751)
+        Locomotif.resize(1168, 751)
         Locomotif.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 232);"))
         self.centralwidget = QtGui.QWidget(Locomotif)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -221,7 +221,7 @@ class Ui_Locomotif(object):
         self.mainDataDisplay.addTab(self.tab_1, _fromUtf8(""))
         Locomotif.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(Locomotif)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1211, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1168, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -349,7 +349,7 @@ class Ui_Locomotif(object):
 
         self.retranslateUi(Locomotif)
         self.mainDataDisplay.setCurrentIndex(0)
-        self.t1Data.setCurrentIndex(1)
+        self.t1Data.setCurrentIndex(0)
         QtCore.QObject.connect(self.actionQuit, QtCore.SIGNAL(_fromUtf8("triggered()")), Locomotif.close)
         QtCore.QObject.connect(self.actionCommands, QtCore.SIGNAL(_fromUtf8("triggered(bool)")), self.QuickCommand.show)
         QtCore.QObject.connect(self.actionEdit, QtCore.SIGNAL(_fromUtf8("triggered(bool)")), self.QuickStatus.show)

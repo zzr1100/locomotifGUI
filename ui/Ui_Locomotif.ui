@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1211</width>
+    <width>1168</width>
     <height>751</height>
    </rect>
   </property>
@@ -128,7 +128,7 @@
        <string notr="true">background-color: rgb(240, 240, 240);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="t1FileData">
        <attribute name="title">
@@ -144,7 +144,8 @@
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);</string>
         </property>
         <property name="lineWidth">
          <number>1</number>
@@ -694,7 +695,7 @@ color: rgb(255, 0, 0);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1211</width>
+     <width>1168</width>
      <height>21</height>
     </rect>
    </property>
@@ -945,30 +946,6 @@ background-color: rgb(255, 255, 255);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <zorder>cmdReadCSV</zorder>
-    <zorder>cmdCreateVPolygone</zorder>
-    <zorder>cmdCreateMaps</zorder>
-    <zorder>cmdMapWidth</zorder>
-    <zorder>cmdMapHeight</zorder>
-    <zorder>cmdCreateDPolygone</zorder>
-    <zorder>label_5</zorder>
-    <zorder>t1GMMapHeight</zorder>
-    <zorder>label_10</zorder>
-    <zorder>t1GMmaptype_3</zorder>
-    <zorder>t1GMmaptype</zorder>
-    <zorder>label_9</zorder>
-    <zorder>t1GMmaptype_2</zorder>
-    <zorder>label_11</zorder>
-    <zorder>t1GMmaptype_4</zorder>
-    <zorder>t1GMMapWidth</zorder>
-    <zorder>t1GMMapHeight</zorder>
-    <zorder>t1GMmaptype_3</zorder>
-    <zorder>t1GMmaptype</zorder>
-    <zorder>label_9</zorder>
-    <zorder>t1GMmaptype_2</zorder>
-    <zorder>label_11</zorder>
-    <zorder>t1GMmaptype_4</zorder>
-    <zorder>t1GMMapWidth</zorder>
    </widget>
   </widget>
   <widget class="QDockWidget" name="QuickTest">

@@ -27,6 +27,7 @@ class Config_Configuration(object):
 		print "-------------------------------------"
 		print "Global Configuration Data"
 		print "-------------------------------------"
+		print "ResourcePath = " + self.resourcePath
 		print "DataPath = " + self.dataPath
 		print "MapPath = " + self.mapPath
 		print "MapWidth = " + str(self.mapWidth)
@@ -42,6 +43,7 @@ class Config_Configuration(object):
 		cfgFile = cfgPath + "\\lcGui.resources"
 		# TODO READ
 		parentDir = os.path.dirname( homePath )
+		self.resourcePath = homePath + "\\uicustom\\resources"
 		self.dataPath = parentDir + "\\sample_data"
 		self.mapPath = parentDir + "\\results"
 		self.mapWidth = 700
@@ -56,6 +58,12 @@ class Config_Configuration(object):
 	def getDataFont( self ):
 		return self.dataFont
 		
+	def setResourcePath( self, path ):
+		self.resourcePath = path
+
+	def getResourcePath( self ):
+		return self.resourcePath
+
 	def setDataPath( self, path ):
 		self.dataPath = path
 

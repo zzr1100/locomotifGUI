@@ -51,20 +51,6 @@ class UiTools(object):
 		for tabElem in self.tabList:
 			tabElem.debugTabElement()
 
-	def initCustomTabWidgetTEST(self, tabWidget, numTabs ):
-		self.tabWidget = tabWidget
-		# dummy tab and rundata at first position
-		tab1 = UiCustomTab()
-		tab1.initTabElement(self.locapp,0)
-		self.tabList = [tab1]
-		self.numTabs = numTabs
-		self.lastTabIndex = numTabs -1
-		self.selectedIndex = 0
-		self.nextinternalnum = numTabs
-		self.selectedCustomTab = tab1
-		self.selectedInternalnum = 0
-		self.selectedRundata = tab1.getRundataBuffer()
-			
 	def initCustomTabWidget(self, tabWidget, numTabs ):
 		self.tabWidget = tabWidget
 		self.tabList = []
@@ -79,7 +65,7 @@ class UiTools(object):
 	def addCustomTabPage(self):
 		print "add a custom tab page"
 		newTabElem = UiCustomTab()
-		newTabElem.initTabElement(self.locapp,self.nextinternalnum)
+		newTabElem.initTabElement(self.locapp,self.nextinternalnum,configData.getResourcePath())
 		newTabElemWidget = newTabElem.getTabElementWidget()
 		# insert this new tab element into our custom tab widget
 		self.tabWidget.addTab(newTabElemWidget, _fromUtf8(""))
@@ -101,7 +87,7 @@ class UiTools(object):
 		newTabElem.rundata.setGoogle2Maptype( maptype )
 
 	def selectCustomTabPage(self, selectedIndex ):
-		print "switch to custom tab page"
+		print "switch to custom tab page " + str(selectedIndex)
 		# save the global rundata into the current tab element
 		# before switching to another one
 		if self.selectedRundata != None:
@@ -172,13 +158,13 @@ class UiCustomTab(object):
 	Supplies a rundata element for a users dataset
 	"""
 
-	def initTabElement(self,locapp,internalnum):
+	def initTabElement(self,locapp,internalnum,resourcePath):
 		self.internalnum = internalnum;
 		
 		# create ui widgets for this custom tab element and collect
 		# them into a buffer
 		self.widgets = Rundata_TabWidgets()
-		self.widgets.init()
+		self.widgets.init(resourcePath)
 		# set title to the new tab widget
 		
 		# set slots and signals

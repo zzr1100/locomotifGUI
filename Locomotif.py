@@ -145,15 +145,17 @@ class Locomotif(QtGui.QMainWindow):
 			return 0
 		
 		# deactivate all tabs 
-		self.work.workCleanTabs( g_tabwidgets, g_rundata, 0 )
+		g_rundata.setWorkingState(1)
+		self.work.workCleanTabs( g_tabwidgets, g_rundata )
 		g_tabwidgets.t1Data.setCurrentIndex(0)
 		
 		# store name in global data	
 		g_rundata.setDataFileName( dataFilename )
 		# set data into current tab
 		g_tabwidgets.t1LoadedDataFilename.setText(dataFilename)
+		
 		# load and display initial data
-		self.work.readDataFileIntoTable( g_tabwidgets, dataFilename )
+		self.work.readDataFileIntoTable( g_tabwidgets, g_rundata, dataFilename )
 		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 		print "data marked on google map type " + g_rundata.getGoogle1Maptype()
 		
@@ -169,6 +171,14 @@ class Locomotif(QtGui.QMainWindow):
 		
 		return 1
 		
+	def openGPSFile(self, Locomotif):
+		""" Load a GPS File for Further Processing """
+		gpsFileName = self.tools.selectGPSFile()
+
+	def openProjectFile(self, Locomotif):
+		""" Load a Project File for Further Processing """
+		projectFileName = self.tools.selectProjectFile()
+
 	def doMainTabAdd(self, Locomotif ):
 		uiTools.addCustomTabPage()
 
@@ -183,57 +193,54 @@ class Locomotif(QtGui.QMainWindow):
 		print "maintabclose " + str(currentIndex)
 		uiTools.removeCustomTabPage(currentIndex)
 
-	def openGPSFile(self, Locomotif):
-		""" Load a GPS File for Further Processing """
-		gpsFileName = self.tools.selectGPSFile()
-
-	def openProjectFile(self, Locomotif):
-		""" Load a Project File for Further Processing """
-		projectFileName = self.tools.selectProjectFile()
-
 	def doSelectGMMaptype1(self, Locomotif):
 		g_rundata.setGoogle1Maptype("hybrid");
-		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
+		if g_rundata.getWorkingState()>=3:
+			self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype2(self, Locomotif):
 		g_rundata.setGoogle1Maptype("satellite");
-		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
+		if g_rundata.getWorkingState()>=3:
+			self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype3(self, Locomotif):
 		g_rundata.setGoogle1Maptype("roadmap");
-		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
+		if g_rundata.getWorkingState()>=3:
+			self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doSelectGMMaptype4(self, Locomotif):
 		g_rundata.setGoogle1Maptype("terrain");
-		self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
+		if g_rundata.getWorkingState()>=3:
+			self.work.markDataOnGoogleMap( g_tabwidgets, g_rundata )
 
 	def doReadCSV(self, Locomotif):
 		"""
 		Reload the CSV DataFrames with the given name
 		"""
 		self.work.workReadCSV( g_tabwidgets, g_rundata )
-		df = g_rundata.getDF()
-		self.work.putCSVIntoTable( g_tabwidgets, df )
-		"""
-		Create Cluster for the loaded Dataframe
-		"""
-		self.work.workCreateCluster( g_tabwidgets, g_rundata )
+		if g_rundata.getWorkingState()>=4:
+			df = g_rundata.getDF()
+			self.work.putCSVIntoTable( g_tabwidgets, g_rundata, df )
+			"""
+			Create Cluster for the loaded Dataframe
+			"""
+			self.work.workCreateCluster( g_tabwidgets, g_rundata )
 
 	def doCreateVPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
-		print "CREATE POLYNOME"
 		self.work.workCreateVPolygone(g_tabwidgets, g_rundata )
-		print "CREATE MAP"
-		self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getVoronoi1() )
+		if g_rundata.getWorkingState()>=7:
+			self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getVoronoi1() )
 
 	def doCreateDPolygone(self, Locomotif):
 		"""
 		Create Polygone from given cluster
 		"""
 		self.work.workCreateDPolygone(g_tabwidgets, g_rundata )
-		self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getDelaunay1() )
+		if g_rundata.getWorkingState()>=7:
+			self.work.markPolygonOnGoogleMap(g_tabwidgets, g_rundata, g_rundata.getDelaunay1() )
 
 	def doSelectGM2Maptype1(self, Locomotif):
 		g_rundata.setGoogle2Maptype("hybrid");

@@ -106,8 +106,10 @@ class Tools_Locomotif(object):
 		for point in points:
 			pvalues = point.split(" ")
 			cpoint = []
-			cpoint.append( float(pvalues[0]) )
+			# the ccords in the polygon are (LON,LAT)
+			# swap to (LAT,LON) in google coords
 			cpoint.append( float(pvalues[1]) )
+			cpoint.append( float(pvalues[0]) )
 			coordinates.append( cpoint );
 		
 		encoder = pcod()

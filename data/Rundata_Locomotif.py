@@ -7,11 +7,24 @@ Created on Tue Jul 07 06:55:51 2015
 import sys
 #from PyQt4 import QtCore, QtGui;
 
+# Values for Workingstate
+# 0 = no data present
+# 1 = datafile selected
+# 2 = read into memory
+# 3 = google map1 with data points created
+# 4 = locomotif csv read executed and dataframe created
+# 5 = dataframe loaded into display table
+# 6 = locomotif cluster created
+# 7 = locomotif polygones created ( V or D )
+# 8 = google map2 with polygones created
+# 9 = locomotif data maps created
+
 class Rundata_Locomotif(object):
 	"""
 	Docstring
 	"""
 	def setupRundata(self):
+		self.workingstate = 0
 		self.datafilename = ""
 		self.gpsfilename = ""
 		self.projectfilename = ""
@@ -40,6 +53,7 @@ class Rundata_Locomotif(object):
 		print "-----------------------------------"
 		print title + " = " + str(self)
 		print "-----------------------------------"
+		print "workingstate = " + str(self.workingstate)
 		print "DataFilename = " + self.datafilename
 		print "GPSFilename = " + self.gpsfilename
 		print "ProjectFilename = " + self.projectfilename
@@ -78,6 +92,7 @@ class Rundata_Locomotif(object):
 
 	def cleanBuffer( self ):
 		print "Clean RUndata"
+		self.workingstate = 0
 		self.datafilename = ""
 		self.gpsfilename = ""
 		self.projectfilename = ""
@@ -103,6 +118,12 @@ class Rundata_Locomotif(object):
 		#self.google1Maptype = "hybrid"
 		#self.google2Maptype = "hybrid"
 	
+	def setWorkingState( self, workingstate ):
+		self.workingstate = workingstate
+
+	def getWorkingState( self ):
+		return self.workingstate
+
 	def setDataFont( self, font ):
 		self.datafont = font
 
@@ -225,6 +246,7 @@ class Rundata_Locomotif(object):
 		"""
 		Copy content from given rundata into g_rundata
 		"""
+		g_rundata.workingstate  = self.workingstate
 		g_rundata.datafilename  = self.datafilename
 		g_rundata.gpsfilename = self.gpsfilename
 		g_rundata.projectfilename = self.projectfilename
@@ -253,6 +275,7 @@ class Rundata_Locomotif(object):
 		"""
 		Copy content from g_rundata into rundata instance
 		"""
+		self.workingstate = g_rundata.workingstate
 		self.datafilename = g_rundata.datafilename
 		self.gpsfilename = g_rundata.gpsfilename
 		self.projectfilename = g_rundata.projectfilename

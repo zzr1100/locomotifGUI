@@ -20,7 +20,7 @@ class Rundata_TabWidgets(object):
 	of the main data display. 
 	"""
 	
-	def init(self):
+	def init(self,resourcePath):
 		newTabElement = QtGui.QWidget()
 		newTabElement.setObjectName(_fromUtf8("newtab"))
 		self.tabElement = newTabElement
@@ -194,6 +194,21 @@ class Rundata_TabWidgets(object):
 		self.t1Map2View.setObjectName(_fromUtf8("t1Map2View"))
 		self.t1Data.addTab(self.t1Map2, _fromUtf8(""))
 		self.translate()
+		# TEST: ADD ICONS TO TABS
+		self.icon_data = QtGui.QIcon( resourcePath + "/icon_data.gif" )
+		self.icon_google = QtGui.QIcon( resourcePath + "/icon_google.png" )
+		self.icon_bio = QtGui.QIcon( resourcePath + "/icon_bio.png" )
+		self.icon_ok = QtGui.QIcon( resourcePath + "/icon_ok.gif" )
+		self.icon_disabled = QtGui.QIcon( resourcePath + "/icon_disabled.gif" )
+		self.t1Data.setTabIcon( 0, self.icon_data )
+		self.t1Data.setTabIcon( 1, self.icon_google )
+		self.t1Data.setTabIcon( 2, self.icon_data )
+		self.t1Data.setTabIcon( 3, self.icon_data )
+		self.t1Data.setTabIcon( 4, self.icon_data )
+		self.t1Data.setTabIcon( 5, self.icon_google )
+		self.t1Data.setTabIcon( 6, self.icon_bio )
+		self.t1Data.setTabIcon( 7, self.icon_bio )
+		
 
 	def translate(self):
 		self.label_2.setText("Data File:")
@@ -262,6 +277,11 @@ class Rundata_TabWidgets(object):
 		g_tabwidgets.t1Map1View = self.t1Map1View
 		g_tabwidgets.t1Map2 = self.t1Map2
 		g_tabwidgets.t1Map2View = self.t1Map2View
+		g_tabwidgets.icon_data = self.icon_data
+		g_tabwidgets.icon_google = self.icon_google
+		g_tabwidgets.icon_bio = self.icon_bio
+		g_tabwidgets.icon_ok = self.icon_ok
+		g_tabwidgets.icon_disabled = self.icon_disabled
 		
 # Global Rundata buffer to be used throughout the application
 # The widgets from the selected tab is moved to this buffer
