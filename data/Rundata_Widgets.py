@@ -208,7 +208,15 @@ class Rundata_TabWidgets(object):
 		self.t1Data.setTabIcon( 5, self.icon_google )
 		self.t1Data.setTabIcon( 6, self.icon_bio )
 		self.t1Data.setTabIcon( 7, self.icon_bio )
-		
+		# DISABLE TABS UNTIL USED
+		self.t1Data.setTabEnabled(0,False)
+		self.t1Data.setTabEnabled(1,False)
+		self.t1Data.setTabEnabled(2,False)
+		self.t1Data.setTabEnabled(3,False)
+		self.t1Data.setTabEnabled(4,False)
+		self.t1Data.setTabEnabled(5,False)
+		self.t1Data.setTabEnabled(6,False)
+		self.t1Data.setTabEnabled(7,False)
 
 	def translate(self):
 		self.label_2.setText("Data File:")

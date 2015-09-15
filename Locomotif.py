@@ -6,6 +6,7 @@ Created on Tue Jul 07 06:55:51 2015
 """
 import sys
 import os
+import ntpath
 from PyQt4 import QtGui, QtCore
 from ui.Ui_Locomotif import Ui_Locomotif
 from tools.Tools_Locomotif import Tools_Locomotif
@@ -160,12 +161,14 @@ class Locomotif(QtGui.QMainWindow):
 		print "data marked on google map type " + g_rundata.getGoogle1Maptype()
 		
 		# initial names for maps
-		mapv1Filename = configData.getMapPath() + "/map1_v.png"
-		mapv2Filename = configData.getMapPath() + "/map2_v.png"
+		mapv1Filename = configData.getMapPath() + "/" + ntpath.basename(str(dataFilename)) + "_bio_v.png"
+		mapv2Filename = configData.getMapPath() + "/" + ntpath.basename(str(dataFilename)) + "_div_v.png"
+		print mapv1Filename
+		print mapv2Filename
 		g_rundata.setV1Mapname( mapv1Filename )
 		g_rundata.setV2Mapname( mapv2Filename )
-		mapd1Filename = configData.getMapPath() + "/map1_d.png"
-		mapd2Filename = configData.getMapPath() + "/map2_d.png"
+		mapd1Filename = configData.getMapPath() + "/" + ntpath.basename(str(dataFilename)) + "_bio_d.png"
+		mapd2Filename = configData.getMapPath() + "/" + ntpath.basename(str(dataFilename)) + "_div_d.png"
 		g_rundata.setD1Mapname( mapd1Filename )
 		g_rundata.setD2Mapname( mapd2Filename )
 		
@@ -267,7 +270,7 @@ class Locomotif(QtGui.QMainWindow):
 	def doDebugToConsole(self, Locomotif):
 		configData.debugConfig()
 		g_rundata.debugRundata("g_rundata")
-		uiTools.debugUiTools()
+		# uiTools.debugUiTools()
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

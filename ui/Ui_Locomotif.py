@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/Ui_Locomotif.ui'
 #
-# Created: Thu Aug 27 14:58:45 2015
+# Created: Fri Aug 28 15:43:39 2015
 #      by: PyQt4 UI code generator 4.9.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -69,7 +69,8 @@ class Ui_Locomotif(object):
         self.t1FileData.setObjectName(_fromUtf8("t1FileData"))
         self.t1FileDataView = QtGui.QTableWidget(self.t1FileData)
         self.t1FileDataView.setGeometry(QtCore.QRect(0, 0, 941, 551))
-        self.t1FileDataView.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);"))
+        self.t1FileDataView.setStyleSheet(_fromUtf8("background-color: rgb(255, 255, 255);\n"
+"border-color: rgb(255, 255, 255);"))
         self.t1FileDataView.setLineWidth(1)
         self.t1FileDataView.setAlternatingRowColors(False)
         self.t1FileDataView.setShowGrid(True)

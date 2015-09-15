@@ -30,6 +30,7 @@ class Rundata_Locomotif(object):
 		self.projectfilename = ""
 		self.df = None
 		self.cluster = None
+		self.polygontype = 0
 		self.voronoi1values = None
 		self.voronoi1ref = None
 		self.voronoi2values = None
@@ -67,6 +68,7 @@ class Rundata_Locomotif(object):
 		print "Google Map Height = " + str(self.googlemapheight)
 		print "Google1Maptype = " + self.google1maptype
 		print "Google2Maptype = " + self.google2maptype
+		print "Polygontype = " + str(self.polygontype)
 		print "DataFrame = "
 		print self.df
 		if self.cluster != None:
@@ -98,6 +100,7 @@ class Rundata_Locomotif(object):
 		self.projectfilename = ""
 		self.df = None
 		self.cluster = None
+		self.polygontype = 0
 		self.voronoi1values = None
 		self.voronoi1ref = None
 		self.voronoi2values = None
@@ -154,6 +157,12 @@ class Rundata_Locomotif(object):
 	def getCluster( self ):
 		return self.cluster
 
+	def setPolygonType( self, polygontype ):
+		self.polygontype = polygontype
+
+	def getPolygonType( self ):
+		return self.polygontype
+		
 	def setVoronoi1( self, res, ref ):
 		self.voronoi1values = res
 		self.voronoi1ref = str(ref)
@@ -252,6 +261,7 @@ class Rundata_Locomotif(object):
 		g_rundata.projectfilename = self.projectfilename
 		g_rundata.df = self.df
 		g_rundata.cluster = self.cluster
+		g_rundata.polygontype = self.polygontype
 		g_rundata.voronoi1values = self.voronoi1values
 		g_rundata.voronoi1ref = self.voronoi1ref
 		g_rundata.voronoi2values = self.voronoi2values
@@ -281,6 +291,7 @@ class Rundata_Locomotif(object):
 		self.projectfilename = g_rundata.projectfilename
 		self.df = g_rundata.df
 		self.cluster = g_rundata.cluster
+		self.polygontype = g_rundata.polygontype
 		self.voronoi1values = g_rundata.voronoi1values
 		self.voronoi1ref = g_rundata.voronoi1ref
 		self.voronoi2values = g_rundata.voronoi2values

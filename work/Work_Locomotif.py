@@ -15,7 +15,6 @@ class Work_Locomotif(object):
     """
     def setupWork(self):
 		self.initialized = 1
-		self.lastcreated = 0
 		self.tools = Tools_Locomotif()
 		self.tools.setupTools()
 
@@ -31,20 +30,28 @@ class Work_Locomotif(object):
 			#print "Clean Tabs data"
 			widgets.t1FileDataView.clear()
 			widgets.t1GoogleMapsView.load( QtCore.QUrl("about:blank"))
+			widgets.t1Data.setTabEnabled(0,False)
+			widgets.t1Data.setTabEnabled(1,False)
 		if cleanLevel<4:
 			#print "Clean Tabs csv"
 			widgets.t1DataFrameView.clear()
+			widgets.t1Data.setTabEnabled(2,False)
 		if cleanLevel<7:
 			#print "Clean Tabs poly"
 			widgets.t1Polygon1View.clear()
 			widgets.t1Polygon2View.clear()
 			widgets.t1GoogleMaps2View.load( QtCore.QUrl("about:blank"))
-			self.lastcreated = 0
+			widgets.t1Data.setTabEnabled(3,False)
+			widgets.t1Data.setTabEnabled(4,False)
+			widgets.t1Data.setTabEnabled(5,False)
+			rundata.setPolygonType(0)
 		if cleanLevel<9:
 			#print "Clean Tabs map"
 			scene = QtGui.QGraphicsScene();
 			widgets.t1Map1View.setScene(scene);
 			widgets.t1Map2View.setScene(scene);
+			widgets.t1Data.setTabEnabled(6,False)
+			widgets.t1Data.setTabEnabled(7,False)
 		
     def readDataFileIntoTable(self, widgets, rundata, filePathAndName ):
 		""" 
@@ -81,6 +88,7 @@ class Work_Locomotif(object):
 				colIndex = colIndex+1
 			rowIndex = rowIndex+ 1
 		fhdl.close()
+		widgets.t1Data.setTabEnabled(0,True)
 		rundata.setWorkingState(2)
 
     def markDataOnGoogleMap(self, widgets, rundata):
@@ -121,7 +129,9 @@ class Work_Locomotif(object):
 		# display a hint if not all lines are displayed in the map
 		if nump < numl:
 			maphint.setText("ATTENTION: Big data, not all points may be displayed at the same time")
-		rundata.setWorkingState(3)
+		if rundata.getWorkingState()<3:
+			rundata.setWorkingState(3)
+		widgets.t1Data.setTabEnabled(1,True)
 
     def workReadCSV(self, widgets, rundata):
 		"""
@@ -136,7 +146,11 @@ class Work_Locomotif(object):
 			return
 			
 		# create data frame
-		df = loc.read_csv( str(dataFilename), mapsta_version=100)
+		try:
+			df = loc.read_csv( str(dataFilename), mapsta_version=100)
+		except Exception, e:
+			self.tools.showInfo("Exception from locomotif packet", str(e) )
+			return
 		rundata.setDF(df)
 		rundata.setWorkingState(4)
 
@@ -174,6 +188,7 @@ class Work_Locomotif(object):
 			widgets.t1DataFrameView.setItem( rowIndex, colIndex, item )
 			rowIndex = rowIndex+ 1
 		rundata.setWorkingState(5)
+		widgets.t1Data.setTabEnabled(2,True)
 		widgets.t1Data.setCurrentIndex(2)
 
     def workCreateCluster(self, widgets, rundata):
@@ -205,15 +220,25 @@ class Work_Locomotif(object):
 		c = rundata.getCluster()
 
 		# calculate polynoms
-		res11, ref = c.voronoi('biomass')
+		try:
+			res11, ref = c.voronoi('biomass')
+		except Exception, e:
+			self.tools.showInfo("Exception from locomotif packet", str(e) )
+			return
 		rundata.setVoronoi1( res11, ref )
-		res12, ref = c.voronoi('diversity')
+		try:
+			res12, ref = c.voronoi('diversity')
+		except Exception, e:
+			self.tools.showInfo("Exception from locomotif packet", str(e) )
+			return
 		rundata.setVoronoi2( res12, ref )
 		# display
 		self.putPolygonIntoTable( res11, widgets.t1Polygon1View, rundata.getDataFont() )
 		self.putPolygonIntoTable( res12, widgets.t1Polygon2View, rundata.getDataFont() )
-		self.lastcreated = 1
+		rundata.setPolygonType(1)
 		rundata.setWorkingState(7)
+		widgets.t1Data.setTabEnabled(3,True)
+		widgets.t1Data.setTabEnabled(4,True)
 		widgets.t1Data.setCurrentIndex(3)
 		# clean existing maps
 		self.workCleanTabs( widgets, rundata )
@@ -232,18 +257,28 @@ class Work_Locomotif(object):
 		c = rundata.getCluster()
 		
 		# Daten fuer Polygone berechnen
-		res11, ref = c.delaunay('biomass')
+		try:
+			res11, ref = c.delaunay('biomass')
+		except Exception, e:
+			self.tools.showInfo("Exception from locomotif packet", str(e) )
+			return
 		rundata.setDelaunay1( res11, ref )
-		res12, ref = c.delaunay('diversity')
+		try:
+			res12, ref = c.delaunay('diversity')
+		except Exception, e:
+			self.tools.showInfo("Exception from locomotif packet", str(e) )
+			return
 		rundata.setDelaunay2( res12, ref )
 		# display
 		self.putPolygonIntoTable( res11, widgets.t1Polygon1View, rundata.getDataFont() )
 		self.putPolygonIntoTable( res12, widgets.t1Polygon2View, rundata.getDataFont() )
-		self.lastcreated = 2
+		rundata.setPolygonType(2)
 		rundata.setWorkingState(7)
+		widgets.t1Data.setTabEnabled(3,True)
+		widgets.t1Data.setTabEnabled(4,True)
 		widgets.t1Data.setCurrentIndex(3)
 		# clean existing maps
-		self.workCleanTabs( widgets, rundata, 3 )
+		self.workCleanTabs( widgets, rundata )
 
     def putPolygonIntoTable(self, pres, uiTable, font ):
 		""" Function display Polygone in table """
@@ -362,12 +397,16 @@ class Work_Locomotif(object):
 		else:
 			maphint.setText("")
 		rundata.setWorkingState(8)
+		widgets.t1Data.setTabEnabled(5,True)
 
     def refreshPolygonOnGoogleMap(self, widgets, rundata ):
-		if self.lastcreated==1:
+		print "refresh polygon"
+		if rundata.getPolygonType()==1:
+			print "mark polygon 1 " + str(rundata.getVoronoi1())
 			self.markPolygonOnGoogleMap( widgets, rundata, rundata.getVoronoi1() )
 			return
-		if self.lastcreated==2:
+		if rundata.getPolygonType()==2:
+			print "mark polygon 2 " + str(rundata.getDelaunay1())
 			self.markPolygonOnGoogleMap( widgets, rundata, rundata.getDelaunay1() )
 			return
 	
@@ -392,10 +431,10 @@ class Work_Locomotif(object):
 		rundata.setMapWidth( mapWidth )
 		rundata.setMapHeight( mapHeight )
 		# which polygons have been created
-		if self.lastcreated == 0: 
+		if rundata.getPolygonType() == 0: 
 				self.tools.showInfo( "Error", "FIRST YOU HAVE TO CALCULATE POLYNOMS" )
 				return
-		if self.lastcreated == 1: 
+		if rundata.getPolygonType() == 1: 
 			# stored filenames
 			map1Filename = rundata.getV1Mapname()
 			map2Filename = rundata.getV2Mapname()
@@ -412,7 +451,7 @@ class Work_Locomotif(object):
 			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res11, out_path=str(map1Filename) )
 			loc.Mapper(Style='Voronoi_index', size=(mapWidth, mapHeight), datasource=res12,out_path=str(map2Filename) )
 
-		if self.lastcreated == 2: 
+		if rundata.getPolygonType() == 2: 
 			# stored filenames
 			map1Filename = rundata.getD1Mapname()
 			map2Filename = rundata.getD2Mapname()
@@ -431,5 +470,7 @@ class Work_Locomotif(object):
 		scene2.addPixmap( QtGui.QPixmap(map2Filename) )
 		widgets.t1Map2View.setScene(scene2);
 		rundata.setWorkingState(9)
+		widgets.t1Data.setTabEnabled(6,True)
+		widgets.t1Data.setTabEnabled(7,True)
 		widgets.t1Data.setCurrentIndex(6)
 		
